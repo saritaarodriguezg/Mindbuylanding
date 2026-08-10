@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindBuy — Compra menos. Piensa más. Elige mejor.</title>
+<meta name="description" content="MindBuy es la pausa consciente antes de comprar. Guarda lo que quieres, date tiempo, reflexiona y decide con intención.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ICON SPRITE
+     ============================================================ -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="icon-mark" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="3.4" height="16" rx="1.7" fill="currentColor"/>
+      <rect x="14.6" y="8.5" width="3.4" height="11.5" rx="1.7" fill="currentColor"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+    </symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/>
+    </symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20c0-9 6-15 16-16 -1 10-7 16-16 16Z"/>
+      <path d="M6 18c3-4 6-7 12-13"/>
+    </symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 4h6a3 3 0 0 1 3 3v6L10 23 1 14Z"/>
+      <circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3.5" y="4.5" width="4" height="4" rx="1"/>
+      <path d="M10.5 6.5h10"/>
+      <rect x="3.5" y="14.5" width="4" height="4" rx="1"/>
+      <path d="M10.5 16.5h10"/>
+    </symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20V10"/><path d="M11 20V4"/><path d="M18 20v-7"/>
+      <path d="M2.5 20h19"/>
+    </symbol>
+    <symbol id="icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 12h4l2.2-6 4.6 12 2.2-6H21.5"/>
+    </symbol>
+    <symbol id="icon-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21V11"/>
+      <path d="M12 11C12 6 7 5 4 5c0 4 2 8 8 8Z"/>
+      <path d="M12 11c0-4 4-6 8-6 0 5-2 9-8 9Z"/>
+    </symbol>
+    <symbol id="icon-guardar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3.5h12v17l-6-4-6 4Z"/>
+    </symbol>
+    <symbol id="icon-espera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2.2"/>
+    </symbol>
+    <symbol id="icon-reflexiona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3Z"/>
+      <path d="M9.5 21.5h5"/>
+    </symbol>
+    <symbol id="icon-decide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 12.5 9 17l10.5-11"/>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5.5"/>
+      <circle cx="12" cy="12" r="4.2"/>
+      <circle cx="17.1" cy="6.9" r="0.9" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <path d="M8 5.5v13l11-6.5Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#inicio" class="nav__logo">
+      <svg class="mark"><use href="#icon-mark"/></svg>
+      <span>MindBuy</span>
+    </a>
+    <nav class="nav__links" aria-label="Navegación principal">
+      <a class="nav__link" href="#inicio" data-scroll>Inicio</a>
+      <a class="nav__link" href="#como-funciona" data-scroll>Cómo funciona</a>
+      <a class="nav__link" href="#funciones" data-scroll>Funciones</a>
+      <a class="nav__link" href="#videos" data-scroll>Videos</a>
+      <a class="nav__link" href="#sobre" data-scroll>Sobre MindBuy</a>
+    </nav>
+    <div class="nav__right">
+      <a href="https://instagram.com/" class="nav__social" data-instagram-link target="_blank" rel="noopener noreferrer" aria-label="MindBuy en Instagram (se abre en una nueva pestaña)">
+        <svg><use href="#icon-instagram"/></svg>
+      </a>
+      <a href="#como-funciona" class="btn btn-primary" data-scroll>Comenzar</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="icon-menu"><use href="#icon-menu"/></svg>
+        <svg class="icon-close"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav__mobile" id="navMobile">
+    <a href="#inicio" data-scroll>Inicio</a>
+    <a href="#como-funciona" data-scroll>Cómo funciona</a>
+    <a href="#funciones" data-scroll>Funciones</a>
+    <a href="#videos" data-scroll>Videos</a>
+    <a href="#sobre" data-scroll>Sobre MindBuy</a>
+    <a href="#como-funciona" class="btn btn-primary" data-scroll>Comenzar</a>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="inicio">
+  <div class="decor decor--leaf"><svg><use href="#icon-leaf"/></svg></div>
+  <div class="decor decor--tag"><svg><use href="#icon-tag"/></svg></div>
+  <span class="decor decor--dot"></span>
+
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        <span class="hero__title-line"><span style="--d:.05s"><em>Compra</em> menos.</span></span>
+        <span class="hero__title-line"><span style="--d:.18s"><em>Piensa</em> más.</span></span>
+        <span class="hero__title-line"><span style="--d:.31s"><em>Elige</em> mejor.</span></span>
+      </h1>
+      <p class="hero__subtitle">MindBuy te ayuda a detenerte antes de comprar, entender tus hábitos y tomar decisiones de consumo más conscientes.</p>
+      <div class="hero__actions">
+        <a href="#como-funciona" class="btn btn-primary" data-scroll>
+          Comenzar ahora
+          <svg><use href="#icon-arrow"/></svg>
+        </a>
+        <a href="#sobre" class="btn btn-secondary" data-scroll>Descubrir MindBuy</a>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="phone">
+        <div class="phone__notch"></div>
+        <div class="phone__screen">
+          <div class="app-status">
+            <span class="app-status__brand">MINDBUY</span>
+            <svg class="mark"><use href="#icon-mark"/></svg>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card__top">
+              <div>
+                <div class="app-card__product">Chaqueta de lana</div>
+                <div class="app-card__price">$248.000</div>
+              </div>
+              <span class="app-card__tag">En pausa</span>
+            </div>
+            <div class="app-card__timer">
+              <span class="app-card__ring"></span>
+              <span class="app-card__timer-text">Tiempo de reflexión<b>68h restantes</b></span>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="app-card__top">
+              <div>
+                <div class="app-card__product">Audífonos inalámbricos</div>
+                <div class="app-card__price">$189.000</div>
+              </div>
+              <span class="app-card__tag">Planificada</span>
+            </div>
+          </div>
+
+          <div class="app-mini">
+            <span class="app-mini__pill"><svg><use href="#icon-espera"/></svg></span>
+            <span class="app-mini__pill filled"><svg><use href="#icon-decide"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EL PROBLEMA
+     ============================================================ -->
+<section class="section problem" id="problema">
+  <div class="container problem__grid">
+    <div class="problem__phrases">
+      <p class="problem__phrase" data-reveal>Lo vi.</p>
+      <p class="problem__phrase" data-reveal>Lo quise.</p>
+      <p class="problem__phrase" data-reveal>Lo compré.</p>
+      <p class="problem__phrase" data-reveal>¿Lo necesitaba?</p>
+    </div>
+    <div class="problem__col-right" data-reveal>
+      <span class="eyebrow"><svg class="mark"><use href="#icon-mark"/></svg>El problema</span>
+      <h2 class="section-title">¿Realmente necesitas comprarlo?</h2>
+      <p class="problem__lede" style="margin-top:1.3rem">Vivimos rodeados de publicidad, recomendaciones algorítmicas, descuentos y tendencias que se repiten sin parar. Entre tanto estímulo, es fácil que una compra innecesaria se sienta como una decisión.</p>
+      <p class="problem__lede" style="margin-top:1rem"><strong>MindBuy es la pausa</strong> que se inserta entre el impulso y la decisión — el espacio que casi nunca nos damos.</p>
+      <div class="problem__mark-row">
+        <svg class="mark"><use href="#icon-mark"/></svg>
+        <span>Esa pausa es MindBuy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CÓMO FUNCIONA
+     ============================================================ -->
+<section class="section how" id="como-funciona">
+  <div class="container">
+    <div data-reveal>
+      <span class="eyebrow"><svg class="mark"><use href="#icon-mark"/></svg>Cómo funciona</span>
+      <h2 class="section-title">Una pausa antes de comprar.</h2>
+      <p class="how__intro">Cuatro pasos simples que transforman un impulso en una decisión con intención.</p>
+    </div>
+
+    <div class="how__timeline" id="howTimeline">
+      <div class="how__line" id="howLine"></div>
+
+      <div class="how__step" data-step>
+        <span class="how__index"><svg style="width:18px;height:18px"><use href="#icon-guardar"/></svg></span>
+        <div class="how__body">
+          <h3 class="how__title">01 — Guarda</h3>
+          <p class="how__text">Añade el producto que estás pensando comprar.</p>
+        </div>
+      </div>
+
+      <div class="how__step" data-step>
+        <span class="how__index"><svg style="width:18px;height:18px"><use href="#icon-espera"/></svg></span>
+        <div class="how__body">
+          <h3 class="how__title">02 — Espera</h3>
+          <p class="how__text">MindBuy crea un espacio de reflexión antes de tomar la decisión.</p>
+        </div>
+      </div>
+
+      <div class="how__step" data-step>
+        <span class="how__index"><svg style="width:18px;height:18px"><use href="#icon-reflexiona"/></svg></span>
+        <div class="how__body">
+          <h3 class="how__title">03 — Reflexiona</h3>
+          <p class="how__text">Pregúntate si realmente lo necesitas, si estaba planeado y qué impacto tiene tu compra.</p>
+        </div>
+      </div>
+
+      <div class="how__step" data-step>
+        <span class="how__index"><svg style="width:18px;height:18px"><use href="#icon-decide"/></svg></span>
+        <div class="how__body">
+          <h3 class="how__title">04 — Decide</h3>
+          <p class="how__text">Compra con intención, o descubre que en realidad no lo necesitabas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FUNCIONES
+     ============================================================ -->
+<section class="section features" id="funciones">
+  <div class="container">
+    <div data-reveal>
+      <span class="eyebrow"><svg class="mark"><use href="#icon-mark"/></svg>Funciones</span>
+      <h2 class="section-title">Tu consumo, pero con intención.</h2>
+      <p class="features__intro">Herramientas simples que te acompañan desde el impulso hasta la reflexión.</p>
+    </div>
+
+    <div class="features__grid">
+      <div class="feature-card" data-reveal>
+        <span class="feature-card__index">01</span>
+        <div class="feature-card__icon"><svg><use href="#icon-list"/></svg></div>
+        <h3 class="feature-card__title">Lista de reflexión</h3>
+        <p class="feature-card__text">Guarda aquello que quieres comprar y date tiempo para pensarlo antes de decidir.</p>
+      </div>
+
+      <div class="feature-card" data-reveal style="--reveal-delay:.08s">
+        <span class="feature-card__index">02</span>
+        <div class="feature-card__icon"><svg><use href="#icon-chart"/></svg></div>
+        <h3 class="feature-card__title">Tracker de compras</h3>
+        <p class="feature-card__text">Registra tus compras y descubre cuáles fueron necesarias, planificadas o impulsivas.</p>
+      </div>
+
+      <div class="feature-card" data-reveal style="--reveal-delay:.16s">
+        <span class="feature-card__index">03</span>
+        <div class="feature-card__icon"><svg><use href="#icon-pulse"/></svg></div>
+        <h3 class="feature-card__title">Evaluación de hábitos</h3>
+        <p class="feature-card__text">Responde preguntas que te ayudan a reconocer patrones en tu manera de consumir.</p>
+      </div>
+
+      <div class="feature-card" data-reveal style="--reveal-delay:.24s">
+        <span class="feature-card__index">04</span>
+        <div class="feature-card__icon"><svg><use href="#icon-sprout"/></svg></div>
+        <h3 class="feature-card__title">Alternativas éticas</h3>
+        <p class="feature-card__text">Descubre opciones y marcas que buscan producir y consumir de una manera más responsable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONOCE MINDBUY — VIDEOS
+     ============================================================ -->
+<section class="section videos" id="videos">
+  <div class="container">
+    <div data-reveal>
+      <span class="eyebrow"><svg class="mark"><use href="#icon-mark"/></svg>Videos</span>
+      <h2 class="section-title">Conoce MindBuy</h2>
+      <p class="videos__intro">Una pausa también puede cambiar la forma en que consumes.</p>
+    </div>
+
+    <div class="videos__grid">
+
+      <article class="video-card video-card--v1" data-reveal>
+        <div class="video-frame" data-video-frame>
+          <span class="video-frame__tag">01 / Introducción</span>
+          <video class="video-frame__video" data-video-el preload="metadata" playsinline controls poster="images/poster-01.jpg">
+            <source src="videos/video-01.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <button class="video-frame__play" type="button" data-video-play aria-label="Reproducir: ¿Qué es MindBuy?">
+            <svg><use href="#icon-play"/></svg>
+          </button>
+          <div class="video-frame__overlay-text">
+            <h3>¿Qué es MindBuy?</h3>
+            <p>Conoce MindBuy y descubre por qué una pequeña pausa puede transformar la manera en que tomamos decisiones de compra.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card video-card--v2" data-reveal style="--reveal-delay:.08s">
+        <div class="video-frame" data-video-frame>
+          <span class="video-frame__tag">02 / Funcionamiento</span>
+          <video class="video-frame__video" data-video-el preload="metadata" playsinline controls poster="images/poster-02.jpg">
+            <source src="videos/video-02.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <button class="video-frame__play" type="button" data-video-play aria-label="Reproducir: ¿Cómo funciona MindBuy?">
+            <svg><use href="#icon-play"/></svg>
+          </button>
+        </div>
+        <h3 class="video-card__title">¿Cómo funciona MindBuy?</h3>
+        <p class="video-card__text">Descubre cómo MindBuy te acompaña desde el momento en que quieres comprar algo hasta el momento en que decides si realmente lo necesitas.</p>
+      </article>
+
+      <article class="video-card video-card--v3" data-reveal style="--reveal-delay:.16s">
+        <div class="video-frame" data-video-frame>
+          <span class="video-frame__tag">03 / Problema</span>
+          <video class="video-frame__video" data-video-el preload="metadata" playsinline controls poster="images/poster-03.jpg">
+            <source src="videos/video-03.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <button class="video-frame__play" type="button" data-video-play aria-label="Reproducir: ¿Por qué compramos cosas que no necesitamos?">
+            <svg><use href="#icon-play"/></svg>
+          </button>
+        </div>
+        <h3 class="video-card__title">¿Por qué compramos cosas que no necesitamos?</h3>
+        <p class="video-card__text">Vivimos rodeados de estímulos que nos invitan a comprar. Entenderlos es el primer paso para recuperar el control sobre nuestras decisiones.</p>
+      </article>
+
+      <article class="video-card video-card--v4" data-reveal style="--reveal-delay:.24s">
+        <div class="video-frame" data-video-frame>
+          <span class="video-frame__tag">04 / Reflexión</span>
+          <video class="video-frame__video" data-video-el preload="metadata" playsinline controls poster="images/poster-04.jpg">
+            <source src="videos/video-04.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+          <button class="video-frame__play" type="button" data-video-play aria-label="Reproducir: 72 horas para decidir">
+            <svg><use href="#icon-play"/></svg>
+          </button>
+        </div>
+        <h3 class="video-card__title">72 horas para decidir</h3>
+        <p class="video-card__text">Antes de comprar, haz una pausa. A veces unas horas son suficientes para descubrir si realmente quieres algo o simplemente reaccionaste al impulso.</p>
+      </article>
+
+      <article class="video-card video-card--v5" data-reveal style="--reveal-delay:.32s">
+        <div class="video-frame" data-video-frame>
+          <span class="video-frame__tag">05 / Consumo consciente</span>
+          <video class="video-frame__video" data-video-el preload="metadata" playsinline controls poster="images/poster-05.jpg">
+            <source src="videos/video-05.mp4" type="video/mp4">
