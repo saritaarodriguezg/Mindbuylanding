@@ -2,3327 +2,2815 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MindBuy — Compra menos. Piensa más. Elige mejor.</title>
-
-<meta name="description" content="MindBuy es la pausa consciente antes de comprar. Guarda lo que quieres, date tiempo, reflexiona y decide con intención.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-
-/* ============================================================
-   MINDBUY — DESIGN TOKENS
-   ============================================================ */
-
-:root{
-  --ivory:#F8F5EE;
-  --ivory-deep:#F1EBDC;
-  --beige:#EFE6D6;
-  --beige-deep:#E3D5B9;
-  --sage:#7C8B6F;
-  --sage-deep:#46523C;
-  --olive:#A8AD8A;
-  --taupe:#7A6753;
-  --ink:#2A241E;
-  --ink-soft:#55493C;
-  --white:#FEFCF8;
-
-  --font-serif:'Fraunces', Georgia, serif;
-  --font-sans:'Manrope', -apple-system, sans-serif;
-
-  --fs-h1:clamp(2.6rem, 3.6vw + 1.5rem, 5.4rem);
-  --fs-h2:clamp(2rem, 2vw + 1.3rem, 3.15rem);
-  --fs-h3:clamp(1.2rem, 0.6vw + 1rem, 1.5rem);
-  --fs-lead:clamp(1.1rem, 0.5vw + 0.95rem, 1.35rem);
-  --fs-body:clamp(1rem, 0.15vw + 0.92rem, 1.0625rem);
-  --fs-stat:clamp(3.2rem, 4.6vw + 1.4rem, 5.75rem);
-  --fs-quote:clamp(1.7rem, 2.6vw + 1rem, 3.35rem);
-  --fs-eyebrow:.78rem;
-
-  --container:1240px;
-  --pad-inline:clamp(1.25rem, 5vw, 3.25rem);
-  --section-pad:clamp(4.5rem, 9vw, 8rem);
-
-  --radius-sm:6px;
-  --radius-md:14px;
-  --radius-lg:28px;
-
-  --nav-h:82px;
-
-  --ease:cubic-bezier(.22,.68,.35,1);
-}
-
-@media (prefers-reduced-motion:reduce){
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.01ms !important;
-  }
-}
-
-/* ============================================================
-   RESET
-   ============================================================ */
-
-*,*::before,*::after{
-  box-sizing:border-box;
-}
-
-*{
-  margin:0;
-}
-
-html{
-  -webkit-text-size-adjust:100%;
-}
-
-body{
-  font-family:var(--font-sans);
-  font-size:var(--fs-body);
-  color:var(--ink);
-  background:var(--ivory);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
-}
-
-img,
-svg{
-  display:block;
-  max-width:100%;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-button{
-  font:inherit;
-  color:inherit;
-  background:none;
-  border:none;
-  cursor:pointer;
-}
-
-ul{
-  list-style:none;
-  padding:0;
-}
-
-h1,
-h2,
-h3,
-h4{
-  font-family:var(--font-serif);
-  font-weight:500;
-  line-height:1.12;
-  letter-spacing:-.01em;
-}
-
-p{
-  color:var(--ink-soft);
-}
-
-:focus-visible{
-  outline:2px solid var(--sage-deep);
-  outline-offset:3px;
-  border-radius:2px;
-}
-
-.container{
-  max-width:var(--container);
-  margin-inline:auto;
-  padding-inline:var(--pad-inline);
-}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:.55rem;
-  font-family:var(--font-sans);
-  font-size:var(--fs-eyebrow);
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--taupe);
-}
-
-.eyebrow .mark{
-  width:14px;
-  height:14px;
-  color:var(--sage);
-  flex-shrink:0;
-}
-
-/* ============================================================
-   REVEAL / SCROLL ANIMATION
-   ============================================================ */
-
-[data-reveal]{
-  opacity:0;
-  transform:translateY(28px);
-  transition:
-    opacity .8s var(--ease),
-    transform .8s var(--ease);
-  transition-delay:var(--reveal-delay,0s);
-}
-
-[data-reveal].is-visible{
-  opacity:1;
-  transform:none;
-}
-
-@media (prefers-reduced-motion:reduce){
-  [data-reveal]{
-    opacity:1;
-    transform:none;
-  }
-}
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.6rem;
-  font-family:var(--font-sans);
-  font-weight:600;
-  font-size:.95rem;
-  padding:.95rem 1.7rem;
-  border-radius:100px;
-  transition:
-    transform .35s var(--ease),
-    background .35s var(--ease),
-    color .35s var(--ease),
-    border-color .35s var(--ease),
-    box-shadow .35s var(--ease);
-  white-space:nowrap;
-}
-
-.btn svg{
-  width:16px;
-  height:16px;
-  transition:transform .35s var(--ease);
-}
-
-.btn-primary{
-  background:var(--sage-deep);
-  color:var(--white);
-  box-shadow:0 1px 2px rgba(42,36,30,.06);
-}
-
-.btn-primary:hover{
-  background:var(--ink);
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px -10px rgba(42,36,30,.35);
-}
-
-.btn-primary:hover svg{
-  transform:translateX(3px);
-}
-
-.btn-secondary{
-  background:transparent;
-  color:var(--ink);
-  border:1.5px solid rgba(42,36,30,.22);
-}
-
-.btn-secondary:hover{
-  border-color:var(--sage-deep);
-  background:rgba(76,92,64,.06);
-  transform:translateY(-2px);
-}
-
-.btn-onDark{
-  background:var(--ivory);
-  color:var(--sage-deep);
-}
-
-.btn-onDark:hover{
-  background:var(--white);
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.35);
-}
-
-/* ============================================================
-   NAVBAR
-   ============================================================ */
-
-.nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:100;
-  height:var(--nav-h);
-
-  display:flex;
-  align-items:center;
-
-  background:rgba(248,245,238,0);
-  border-bottom:1px solid rgba(42,36,30,0);
-
-  transition:
-    background .45s var(--ease),
-    border-color .45s var(--ease),
-    backdrop-filter .45s var(--ease),
-    height .3s var(--ease);
-}
-
-.nav.is-scrolled{
-  background:rgba(248,245,238,.82);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid rgba(42,36,30,.08);
-  height:72px;
-}
-
-.nav__inner{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.nav__logo{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-}
-
-.nav__logo .mark{
-  width:24px;
-  height:24px;
-  color:var(--sage-deep);
-}
-
-.nav__logo span{
-  font-family:var(--font-sans);
-  font-weight:800;
-  font-size:1.2rem;
-  letter-spacing:-.01em;
-  color:var(--ink);
-}
-
-.nav__links{
-  display:flex;
-  align-items:center;
-  gap:2.4rem;
-}
-
-.nav__link{
-  font-size:.94rem;
-  font-weight:500;
-  color:var(--ink-soft);
-  position:relative;
-  padding-block:.3rem;
-}
-
-.nav__link::after{
-  content:'';
-  position:absolute;
-  left:0;
-  right:100%;
-  bottom:0;
-  height:1.5px;
-  background:var(--sage-deep);
-  transition:right .35s var(--ease);
-}
-
-.nav__link:hover{
-  color:var(--ink);
-}
-
-.nav__link:hover::after{
-  right:0;
-}
-
-.nav__right{
-  display:flex;
-  align-items:center;
-  gap:1.4rem;
-}
-
-.nav__toggle{
-  display:none;
-  width:40px;
-  height:40px;
-  align-items:center;
-  justify-content:center;
-  color:var(--ink);
-}
-
-.nav__toggle svg{
-  width:22px;
-  height:22px;
-}
-
-.nav__toggle .icon-close{
-  display:none;
-}
-
-.nav__mobile{
-  position:fixed;
-  inset:0;
-  top:var(--nav-h);
-
-  background:var(--ivory);
-
-  display:flex;
-  flex-direction:column;
-
-  padding:2.5rem var(--pad-inline);
-
-  gap:.5rem;
-
-  transform:translateY(-8px);
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity .35s var(--ease),
-    transform .35s var(--ease),
-    visibility .35s;
-
-  z-index:99;
-}
-
-.nav__mobile.is-open{
-  opacity:1;
-  transform:none;
-  visibility:visible;
-}
-
-.nav__mobile a{
-  font-family:var(--font-serif);
-  font-size:1.9rem;
-  font-weight:400;
-  padding:.7rem 0;
-  border-bottom:1px solid rgba(42,36,30,.1);
-}
-
-.nav__mobile .btn{
-  margin-top:1.5rem;
-  align-self:flex-start;
-  font-family:var(--font-sans);
-  font-size:.95rem;
-  padding:.95rem 1.7rem;
-  border-bottom:none;
-}
-
-@media (max-width:880px){
-
-  .nav__links{
-    display:none;
-  }
-
-  .nav__toggle{
-    display:flex;
-  }
-
-  .nav__right .btn-primary{
-    display:none;
-  }
-}
-
-body.menu-open .nav__toggle .icon-menu{
-  display:none;
-}
-
-body.menu-open .nav__toggle .icon-close{
-  display:block;
-}
-
-body.menu-open{
-  overflow:hidden;
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-
-.hero{
-  position:relative;
-
-  padding-top:
-    calc(var(--nav-h) + clamp(2.5rem,6vw,5rem));
-
-  padding-bottom:
-    clamp(3rem,7vw,6rem);
-
-  overflow:hidden;
-}
-
-.hero__inner{
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:clamp(2rem,4vw,3rem);
-  align-items:center;
-
-  position:relative;
-  z-index:2;
-}
-
-.hero__title{
-  font-size:var(--fs-h1);
-  color:var(--ink);
-}
-
-.hero__title-line{
-  display:block;
-  overflow:hidden;
-}
-
-.hero__title-line span{
-  display:block;
-
-  transform:translateY(110%);
-
-  animation:riseIn .9s var(--ease) forwards;
-  animation-delay:var(--d,0s);
-}
-
-.hero__title em{
-  font-style:italic;
-  font-weight:400;
-  color:var(--sage-deep);
-}
-
-@keyframes riseIn{
-  to{
-    transform:translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion:reduce){
-
-  .hero__title-line span{
-    transform:none;
-    animation:none;
-  }
-}
-
-.hero__subtitle{
-  margin-top:1.6rem;
-  max-width:34rem;
-
-  font-size:var(--fs-lead);
-  color:var(--ink-soft);
-
-  opacity:0;
-
-  animation:fadeUp .9s var(--ease) forwards;
-  animation-delay:.55s;
-}
-
-.hero__actions{
-  margin-top:2.3rem;
-
-  display:flex;
-  flex-wrap:wrap;
-  gap:1rem;
-
-  opacity:0;
-
-  animation:fadeUp .9s var(--ease) forwards;
-  animation-delay:.75s;
-}
-
-@keyframes fadeUp{
-
-  from{
-    opacity:0;
-    transform:translateY(16px);
-  }
-
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-@media (prefers-reduced-motion:reduce){
-
-  .hero__subtitle,
-  .hero__actions{
-    opacity:1;
-    animation:none;
-  }
-}
-
-.hero__visual{
-  position:relative;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  opacity:0;
-
-  animation:fadeScale 1s var(--ease) forwards;
-  animation-delay:.4s;
-}
-
-@keyframes fadeScale{
-
-  from{
-    opacity:0;
-    transform:scale(.94) translateY(14px);
-  }
-
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-@media (prefers-reduced-motion:reduce){
-
-  .hero__visual{
-    opacity:1;
-    animation:none;
-  }
-}
-
-/* phone mockup */
-
-.phone{
-  width:min(300px,78vw);
-  aspect-ratio:9/18.5;
-
-  background:var(--ink);
-
-  border-radius:42px;
-  padding:12px;
-
-  box-shadow:
-    0 40px 80px -30px rgba(42,36,30,.45),
-    0 0 0 1px rgba(42,36,30,.05);
-
-  position:relative;
-}
-
-.phone__screen{
-  width:100%;
-  height:100%;
-
-  background:
-    linear-gradient(
-      180deg,
-      var(--beige) 0%,
-      var(--ivory) 55%
-    );
-
-  border-radius:30px;
-
-  overflow:hidden;
-
-  position:relative;
-
-  display:flex;
-  flex-direction:column;
-
-  padding:1.5rem 1.15rem;
-}
-
-.phone__notch{
-  position:absolute;
-
-  top:0;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  width:38%;
-  height:22px;
-
-  background:var(--ink);
-
-  border-radius:0 0 16px 16px;
-
-  z-index:3;
-}
-
-.app-status{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  margin-bottom:1.4rem;
-}
-
-.app-status__brand{
-  font-family:var(--font-sans);
-  font-weight:800;
-  font-size:.72rem;
-  letter-spacing:.06em;
-  color:var(--ink-soft);
-}
-
-.app-status .mark{
-  width:14px;
-  height:14px;
-  color:var(--sage-deep);
-}
-
-.app-card{
-  background:var(--white);
-
-  border-radius:18px;
-
-  padding:1.1rem 1.05rem;
-
-  box-shadow:0 14px 30px -18px rgba(42,36,30,.3);
-
-  margin-bottom:.9rem;
-}
-
-.app-card__top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-
-  gap:.5rem;
-
-  margin-bottom:.7rem;
-}
-
-.app-card__tag{
-  font-size:.62rem;
-  font-weight:700;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-
-  color:var(--sage-deep);
-
-  background:rgba(124,139,111,.14);
-
-  padding:.2rem .55rem;
-
-  border-radius:100px;
-}
-
-.app-card__product{
-  font-family:var(--font-serif);
-  font-size:1rem;
-  color:var(--ink);
-
-  margin-bottom:.15rem;
-}
-
-.app-card__price{
-  font-size:.82rem;
-  color:var(--ink-soft);
-  font-weight:600;
-}
-
-.app-card__timer{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-
-  margin-top:.85rem;
-  padding-top:.85rem;
-
-  border-top:1px dashed rgba(42,36,30,.14);
-}
-
-.app-card__ring{
-  width:30px;
-  height:30px;
-
-  border-radius:50%;
-
-  background:
-    conic-gradient(
-      var(--sage-deep) 0deg 260deg,
-      rgba(124,139,111,.18) 260deg 360deg
-    );
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  flex-shrink:0;
-}
-
-.app-card__ring::after{
-  content:'';
-
-  width:20px;
-  height:20px;
-
-  border-radius:50%;
-
-  background:var(--white);
-}
-
-.app-card__timer-text{
-  font-size:.68rem;
-  color:var(--ink-soft);
-  line-height:1.3;
-}
-
-.app-card__timer-text b{
-  color:var(--ink);
-  font-size:.78rem;
-
-  display:block;
-}
-
-.app-mini{
-  display:flex;
-  gap:.55rem;
-  margin-top:auto;
-}
-
-.app-mini__pill{
-  flex:1;
-
-  height:52px;
-
-  border-radius:12px;
-
-  background:var(--beige-deep);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:var(--sage-deep);
-}
-
-.app-mini__pill svg{
-  width:16px;
-  height:16px;
-}
-
-.app-mini__pill.filled{
-  background:var(--sage-deep);
-  color:var(--white);
-}
-
-.decor{
-  position:absolute;
-
-  color:var(--olive);
-
-  opacity:.55;
-
-  pointer-events:none;
-}
-
-.decor svg{
-  width:100%;
-  height:100%;
-}
-
-.decor--leaf{
-  top:6%;
-  left:-1%;
-
-  width:52px;
-  height:52px;
-}
-
-.decor--tag{
-  bottom:10%;
-  right:-2%;
-
-  width:42px;
-  height:42px;
-
-  color:var(--taupe);
-  opacity:.5;
-}
-
-.decor--dot{
-  top:44%;
-  left:46%;
-
-  width:8px;
-  height:8px;
-
-  background:var(--sage);
-
-  border-radius:50%;
-
-  opacity:.5;
-}
-
-@media (max-width:640px){
-
-  .decor{
-    display:none;
-  }
-}
-
-@media (max-width:980px){
-
-  .hero__inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero__subtitle{
-    margin-inline:auto;
-  }
-
-  .hero__actions{
-    justify-content:center;
-  }
-
-  .hero__visual{
-    order:-1;
-    margin-bottom:1rem;
-  }
-
-  .phone{
-    width:min(240px,62vw);
-  }
-}
-
-/* ============================================================
-   SECTION BASE
-   ============================================================ */
-
-.section{
-  padding-block:var(--section-pad);
-  position:relative;
-}
-
-.section-title{
-  font-size:var(--fs-h2);
-  color:var(--ink);
-
-  margin-top:.7rem;
-
-  max-width:20ch;
-}
-
-.section-head{
-  margin-bottom:clamp(2.5rem,5vw,4rem);
-}
-
-/* ============================================================
-   PROBLEM SECTION
-   ============================================================ */
-
-.problem{
-  background:var(--ivory);
-}
-
-.problem__grid{
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:clamp(2rem,5vw,4rem);
-
-  align-items:start;
-}
-
-.problem__phrases{
-  display:flex;
-  flex-direction:column;
-  gap:.15em;
-}
-
-.problem__phrase{
-  font-family:var(--font-serif);
-
-  font-size:clamp(1.9rem,4vw,3.4rem);
-
-  font-weight:400;
-
-  color:rgba(42,36,30,.32);
-
-  transition-property:opacity,transform,color;
-}
-
-.problem__phrase:nth-child(1){
-  --reveal-delay:0s;
-}
-
-.problem__phrase:nth-child(2){
-  --reveal-delay:.16s;
-}
-
-.problem__phrase:nth-child(3){
-  --reveal-delay:.32s;
-}
-
-.problem__phrase:nth-child(4){
-  --reveal-delay:1.05s;
-
-  font-style:italic;
-
-  color:var(--sage-deep);
-}
-
-.problem__col-right{
-  padding-top:clamp(0rem,2vw,1rem);
-}
-
-.problem__lede{
-  font-size:var(--fs-lead);
-
-  color:var(--ink-soft);
-
-  max-width:30rem;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.problem__lede strong{
-  color:var(--ink);
-  font-weight:700;
-}
+  <title>MindBuy — Compra menos. Piensa más. Elige mejor.</title>
 
-.problem__mark-row{
-  display:flex;
-  align-items:center;
+  <meta
+    name="description"
+    content="MindBuy te ayuda a pausar, reflexionar y decidir antes de comprar."
+  >
+
+  <!-- FUENTES -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* =====================================================
+       VARIABLES
+       ===================================================== */
+
+    :root {
+      --ivory: #F8F5EE;
+      --ivory-deep: #F1EBDC;
+      --beige: #EFE6D6;
+      --beige-deep: #E3D5B9;
+
+      --sage: #7C8B6F;
+      --sage-deep: #46523C;
+      --olive: #A8AD8A;
+
+      --taupe: #7A6753;
+
+      --ink: #2A241E;
+      --ink-soft: #55493C;
+
+      --white: #FEFCF8;
+
+      --radius: 28px;
+      --shadow: 0 25px 70px rgba(42,36,30,.10);
+    }
+
+
+    /* =====================================================
+       RESET
+       ===================================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* =====================================================
+       NAVBAR
+       ===================================================== */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+
+      padding: 18px 5%;
 
-  gap:.8rem;
+      transition:
+        background .35s ease,
+        box-shadow .35s ease,
+        padding .35s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(248,245,238,.88);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 35px rgba(42,36,30,.07);
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
 
-  margin-top:1.8rem;
-}
+    .nav__inner {
+      max-width: 1300px;
+      margin: auto;
 
-.problem__mark-row .mark{
-  width:20px;
-  height:20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
 
-  color:var(--sage-deep);
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-  flex-shrink:0;
-}
+      font-family: "Fraunces", serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
 
-.problem__mark-row span{
-  font-size:.85rem;
-  color:var(--taupe);
-  font-weight:600;
-  letter-spacing:.02em;
-}
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
 
-@media (max-width:860px){
+      display: grid;
+      place-items: center;
 
-  .problem__grid{
-    grid-template-columns:1fr;
-  }
-}
+      background: var(--sage-deep);
+      color: var(--ivory);
 
-/* ============================================================
-   HOW IT WORKS
-   ============================================================ */
+      font-size: .9rem;
+    }
 
-.how{
-  background:var(--ivory-deep);
-}
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
 
-.how__intro{
-  font-size:var(--fs-lead);
+      font-size: .82rem;
+      font-weight: 700;
+    }
 
-  color:var(--ink-soft);
+    .nav__links a {
+      opacity: .72;
+      transition: opacity .2s ease;
+    }
 
-  max-width:38rem;
+    .nav__links a:hover {
+      opacity: 1;
+    }
 
-  margin-top:.7rem;
-}
+    .nav__cta {
+      padding: 12px 20px;
 
-.how__timeline{
-  margin-top:clamp(2.5rem,5vw,4rem);
+      border-radius: 999px;
 
-  position:relative;
-}
+      background: var(--sage-deep);
+      color: var(--white) !important;
 
-.how__line{
-  position:absolute;
+      opacity: 1 !important;
 
-  left:21px;
-  top:8px;
-  bottom:8px;
+      transition:
+        transform .25s ease,
+        background .25s ease;
+    }
 
-  width:2px;
+    .nav__cta:hover {
+      transform: translateY(-2px);
+      background: #35402e;
+    }
 
-  background:rgba(42,36,30,.1);
-}
+    .mobile-button {
+      display: none;
 
-.how__line::after{
-  content:'';
+      width: 42px;
+      height: 42px;
 
-  position:absolute;
+      border: 0;
+      border-radius: 50%;
 
-  left:0;
-  top:0;
+      background: var(--beige);
 
-  width:100%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
 
-  height:calc(var(--progress,0) * 100%);
+    .mobile-menu {
+      display: none;
+    }
 
-  background:var(--sage-deep);
 
-  transition:height .12s linear;
-}
+    /* =====================================================
+       HERO
+       ===================================================== */
 
-.how__step{
-  position:relative;
+    .hero {
+      min-height: 100vh;
+      padding: 150px 6% 90px;
 
-  display:grid;
+      position: relative;
+      overflow: hidden;
 
-  grid-template-columns:44px 1fr;
+      display: flex;
+      align-items: center;
+    }
 
-  gap:1.6rem;
+    .hero::before {
+      content: "";
 
-  padding-block:clamp(1.6rem,3vw,2.4rem);
-}
+      position: absolute;
+      width: 600px;
+      height: 600px;
 
-.how__step:not(:last-child){
-  border-bottom:1px solid rgba(42,36,30,.08);
-}
+      top: -230px;
+      right: -180px;
 
-.how__index{
-  width:44px;
-  height:44px;
+      border-radius: 50%;
 
-  border-radius:50%;
+      background: rgba(168,173,138,.20);
+      filter: blur(4px);
+    }
 
-  background:var(--ivory-deep);
+    .hero__inner {
+      width: min(1250px, 100%);
+      margin: auto;
 
-  border:2px solid rgba(42,36,30,.14);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 70px;
+      align-items: center;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+      position: relative;
+      z-index: 2;
+    }
 
-  font-family:var(--font-serif);
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
 
-  font-size:1.05rem;
+      margin-bottom: 24px;
 
-  color:var(--ink-soft);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
 
-  z-index:1;
+      color: var(--sage-deep);
+    }
 
-  transition:
-    border-color .4s var(--ease),
-    color .4s var(--ease),
-    background .4s var(--ease);
-}
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
 
-.how__step.is-active .how__index{
-  border-color:var(--sage-deep);
+      border-radius: 50%;
 
-  background:var(--sage-deep);
+      background: var(--sage);
+    }
 
-  color:var(--white);
-}
+    .hero h1 {
+      max-width: 720px;
 
-.how__body{
-  padding-top:.4rem;
-}
+      font-family: "Fraunces", serif;
+      font-size: clamp(4rem, 7.3vw, 7.2rem);
+      line-height: .91;
+      letter-spacing: -.065em;
+      font-weight: 600;
+    }
 
-.how__title{
-  font-family:var(--font-serif);
+    .hero h1 em {
+      color: var(--sage-deep);
+      font-style: italic;
+    }
 
-  font-size:var(--fs-h3);
+    .hero__text {
+      max-width: 540px;
 
-  color:var(--ink);
-}
+      margin-top: 30px;
 
-.how__text{
-  margin-top:.4rem;
+      color: var(--ink-soft);
 
-  color:var(--ink-soft);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
 
-  max-width:36rem;
-}
+    .hero__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
 
-@media (max-width:640px){
+      margin-top: 35px;
+    }
 
-  .how__line{
-    left:19px;
-  }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-  .how__step{
-    grid-template-columns:40px 1fr;
-    gap:1.1rem;
-  }
+      min-height: 52px;
+      padding: 0 24px;
 
-  .how__index{
-    width:40px;
-    height:40px;
-    font-size:.95rem;
-  }
-}
+      border-radius: 999px;
 
-/* ============================================================
-   FEATURES
-   ============================================================ */
+      font-size: .82rem;
+      font-weight: 800;
 
-.features{
-  background:var(--ivory);
-}
+      transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+    }
 
-.features__intro{
-  font-size:var(--fs-lead);
+    .button:hover {
+      transform: translateY(-3px);
+    }
 
-  color:var(--ink-soft);
+    .button--primary {
+      background: var(--sage-deep);
+      color: var(--white);
 
-  max-width:38rem;
+      box-shadow: 0 14px 30px rgba(70,82,60,.18);
+    }
 
-  margin-top:.7rem;
-}
+    .button--secondary {
+      background: var(--beige);
+      color: var(--ink);
+    }
 
-.features__grid{
-  margin-top:clamp(2.5rem,5vw,4rem);
+    /* Teléfono */
 
-  display:grid;
+    .hero-phone {
+      position: relative;
 
-  grid-template-columns:repeat(2,1fr);
+      width: min(390px, 80%);
+      margin: auto;
 
-  gap:1.4rem;
-}
+      transform: rotate(4deg);
+      transition: transform .6s ease;
+    }
 
-.feature-card{
-  padding:2.1rem 1.9rem;
+    .hero-phone:hover {
+      transform: rotate(0deg) translateY(-8px);
+    }
 
-  border:1px solid rgba(42,36,30,.1);
+    .phone-shell {
+      padding: 11px;
 
-  border-radius:var(--radius-md);
+      border-radius: 48px;
 
-  background:var(--ivory);
+      background: #302b25;
 
-  transition:
-    transform .4s var(--ease),
-    border-color .4s var(--ease),
-    box-shadow .4s var(--ease),
-    background .4s var(--ease);
-}
+      box-shadow:
+        0 45px 80px rgba(42,36,30,.22),
+        0 10px 20px rgba(42,36,30,.10);
+    }
 
-.feature-card:hover{
-  transform:translateY(-6px);
+    .phone-screen {
+      min-height: 650px;
 
-  border-color:rgba(76,92,64,.35);
+      overflow: hidden;
 
-  background:var(--white);
+      border-radius: 39px;
 
-  box-shadow:0 24px 48px -28px rgba(42,36,30,.28);
-}
+      background:
+        linear-gradient(
+          145deg,
+          #F8F5EE,
+          #E9E3D5
+        );
 
-.feature-card__icon{
-  width:46px;
-  height:46px;
+      padding: 28px 23px;
+    }
 
-  border-radius:12px;
+    .phone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-  background:var(--beige);
+      margin-bottom: 35px;
+    }
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    .phone-brand {
+      font-family: "Fraunces", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
 
-  color:var(--taupe);
+    .phone-circle {
+      width: 34px;
+      height: 34px;
 
-  margin-bottom:1.3rem;
+      border-radius: 50%;
 
-  transition:
-    background .4s var(--ease),
-    color .4s var(--ease),
-    transform .4s var(--ease);
-}
+      background: var(--sage);
 
-.feature-card__icon svg{
-  width:22px;
-  height:22px;
-}
+      display: grid;
+      place-items: center;
 
-.feature-card:hover .feature-card__icon{
-  background:var(--sage-deep);
+      color: var(--white);
+      font-size: .75rem;
+    }
 
-  color:var(--white);
+    .phone-title {
+      font-family: "Fraunces", serif;
+      font-size: 2.2rem;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
 
-  transform:scale(1.06) rotate(-4deg);
-}
+    .phone-subtitle {
+      margin-top: 10px;
 
-.feature-card__index{
-  font-size:.75rem;
+      font-size: .72rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
 
-  font-weight:700;
+    .phone-card {
+      margin-top: 28px;
+      padding: 20px;
 
-  color:var(--olive);
+      border-radius: 22px;
 
-  letter-spacing:.08em;
+      background: rgba(255,255,255,.60);
+      border: 1px solid rgba(42,36,30,.06);
+    }
 
-  margin-bottom:.5rem;
+    .phone-card__top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-  display:block;
-}
+    .phone-icon {
+      width: 39px;
+      height: 39px;
 
-.feature-card__title{
-  font-family:var(--font-serif);
+      border-radius: 13px;
 
-  font-size:1.3rem;
+      background: var(--beige-deep);
 
-  color:var(--ink);
+      display: grid;
+      place-items: center;
+    }
 
-  margin-bottom:.55rem;
-}
+    .phone-card strong {
+      display: block;
+      font-size: .75rem;
+    }
 
-.feature-card__text{
-  color:var(--ink-soft);
+    .phone-card small {
+      display: block;
+      margin-top: 3px;
 
-  font-size:.97rem;
-}
+      font-size: .62rem;
+      color: var(--ink-soft);
+    }
 
-@media (max-width:720px){
+    .phone-line {
+      width: 100%;
+      height: 7px;
 
-  .features__grid{
-    grid-template-columns:1fr;
-  }
-}
+      margin-top: 20px;
 
-/* ============================================================
-   QUOTE
-   ============================================================ */
+      border-radius: 999px;
 
-.quote{
-  background:var(--sage-deep);
+      background: var(--beige);
+    }
 
-  color:var(--ivory);
+    .phone-line.short {
+      width: 65%;
+      margin-top: 9px;
+    }
 
-  position:relative;
 
-  overflow:hidden;
+    /* =====================================================
+       SECCIONES GENERALES
+       ===================================================== */
 
-  text-align:center;
+    .section {
+      padding: 120px 6%;
+    }
 
-  padding-block:var(--section-pad);
-}
+    .section__inner {
+      width: min(1180px, 100%);
+      margin: auto;
+    }
 
-.quote__blob{
-  position:absolute;
+    .section-heading {
+      max-width: 760px;
+    }
 
-  inset:0;
+    .section-heading h2 {
+      margin-top: 15px;
 
-  z-index:0;
+      font-family: "Fraunces", serif;
+      font-size: clamp(3rem, 5.5vw, 5.4rem);
+      line-height: .96;
+      letter-spacing: -.055em;
+    }
 
-  opacity:.5;
-}
+    .section-heading h2 em {
+      color: var(--sage-deep);
+      font-style: italic;
+    }
 
-.quote__inner{
-  position:relative;
-  z-index:1;
-}
+    .section-heading p {
+      max-width: 600px;
 
-.quote__text{
-  font-family:var(--font-serif);
+      margin-top: 25px;
 
-  font-size:var(--fs-quote);
+      color: var(--ink-soft);
+      line-height: 1.8;
+    }
 
-  font-style:italic;
 
-  font-weight:400;
+    /* =====================================================
+       PROBLEMA
+       ===================================================== */
 
-  color:var(--ivory);
+    .problem {
+      background: var(--beige);
+    }
 
-  max-width:20ch;
+    .problem-grid {
+      margin-top: 65px;
 
-  margin-inline:auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
 
-  line-height:1.22;
-}
+    .problem-card {
+      min-height: 300px;
 
-.quote__gap{
-  display:inline-flex;
+      padding: 32px;
 
-  align-items:center;
+      border-radius: var(--radius);
 
-  justify-content:center;
+      background: rgba(255,255,255,.46);
 
-  width:2.1em;
+      border: 1px solid rgba(42,36,30,.06);
 
-  height:.62em;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-  vertical-align:middle;
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
 
-  margin-inline:.12em;
+    .problem-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow);
+    }
 
-  position:relative;
-}
+    .problem-number {
+      font-family: "Fraunces", serif;
+      font-size: 3rem;
+      color: var(--sage-deep);
+    }
 
-.quote__gap .mark{
-  width:1.05em;
-  height:1.05em;
+    .problem-card h3 {
+      margin-top: auto;
 
-  color:var(--olive);
-}
+      font-family: "Fraunces", serif;
+      font-size: 1.8rem;
+    }
 
-.quote__sub{
-  margin-top:1.6rem;
+    .problem-card p {
+      margin-top: 10px;
 
-  font-family:var(--font-sans);
+      font-size: .85rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
 
-  font-size:1.02rem;
 
-  color:rgba(248,245,238,.78);
+    /* =====================================================
+       COMO FUNCIONA
+       ===================================================== */
 
-  font-weight:500;
-}
+    .steps {
+      margin-top: 75px;
 
-/* ============================================================
-   STATS
-   ============================================================ */
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
 
-.stats{
-  background:var(--ivory);
-}
+      position: relative;
+    }
 
-.stats__grid{
-  display:grid;
+    .step {
+      position: relative;
 
-  grid-template-columns:repeat(3,1fr);
+      padding: 30px;
 
-  gap:1.2rem;
+      min-height: 270px;
 
-  margin-top:clamp(2.5rem,5vw,3.5rem);
-}
+      border-radius: 25px;
 
-.stat{
-  padding:clamp(2rem,4vw,2.8rem) 1.5rem;
+      background: var(--white);
 
-  border-radius:var(--radius-md);
+      border: 1px solid rgba(42,36,30,.07);
 
-  background:var(--beige);
+      box-shadow: 0 15px 45px rgba(42,36,30,.045);
+    }
 
-  text-align:center;
-}
+    .step-number {
+      width: 45px;
+      height: 45px;
 
-.stat__number{
-  font-family:var(--font-serif);
+      border-radius: 50%;
 
-  font-size:var(--fs-stat);
+      display: grid;
+      place-items: center;
 
-  color:var(--sage-deep);
+      background: var(--sage-deep);
+      color: var(--white);
 
-  line-height:1;
-}
+      font-size: .75rem;
+      font-weight: 800;
+    }
 
-.stat__label{
-  margin-top:.85rem;
+    .step h3 {
+      margin-top: 65px;
 
-  font-size:.92rem;
+      font-family: "Fraunces", serif;
+      font-size: 1.55rem;
+    }
 
-  color:var(--ink-soft);
+    .step p {
+      margin-top: 10px;
 
-  font-weight:600;
-}
+      color: var(--ink-soft);
+      font-size: .82rem;
+      line-height: 1.7;
+    }
 
-@media (max-width:720px){
 
-  .stats__grid{
-    grid-template-columns:1fr;
-  }
-}
+    /* =====================================================
+       MINDBOT
+       ===================================================== */
 
-/* ============================================================
-   ABOUT
-   ============================================================ */
+    .mindbot-section {
+      position: relative;
 
-.about{
-  background:var(--ivory-deep);
-}
+      min-height: 960px;
 
-.about__grid{
-  display:grid;
+      padding: 115px 6% 120px;
 
-  grid-template-columns:1.3fr .7fr;
+      overflow: hidden;
 
-  gap:clamp(2.5rem,5vw,4.5rem);
+      background:
+        radial-gradient(
+          circle at 50% 52%,
+          rgba(168,173,138,.24) 0%,
+          rgba(239,230,214,.17) 28%,
+          transparent 65%
+        ),
+        var(--ivory);
 
-  align-items:start;
-}
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.about__title{
-  font-size:var(--fs-h2);
+    .mindbot-section::before {
+      content: "";
 
-  color:var(--ink);
+      position: absolute;
 
-  max-width:16ch;
-}
+      width: 700px;
+      height: 700px;
 
-.about__lead{
-  margin-top:1.5rem;
+      left: 50%;
+      top: 53%;
 
-  font-family:var(--font-serif);
+      transform: translate(-50%, -50%);
 
-  font-style:italic;
+      border-radius: 50%;
 
-  font-size:var(--fs-lead);
+      border: 1px solid rgba(124,139,111,.10);
+    }
 
-  color:var(--ink);
+    .mindbot-container {
+      width: min(1150px, 100%);
 
-  border-left:3px solid var(--sage-deep);
+      margin: auto;
 
-  padding-left:1.4rem;
+      text-align: center;
 
-  max-width:32rem;
-}
+      position: relative;
+      z-index: 2;
+    }
 
-.about__text{
-  margin-top:1.5rem;
+    /* Monstera */
 
-  max-width:34rem;
+    .mindbot-leaf {
+      width: min(205px, 40vw);
 
-  color:var(--ink-soft);
-}
+      margin: 0 auto 28px;
 
-.about__creator{
-  background:var(--white);
+      position: relative;
+      z-index: 5;
 
-  border-radius:var(--radius-md);
+      filter:
+        drop-shadow(0 20px 24px rgba(42,36,30,.10))
+        drop-shadow(0 0 27px rgba(168,173,138,.18));
 
-  padding:2.2rem 1.9rem;
+      animation: leafFloat 6s ease-in-out infinite;
+    }
 
-  border:1px solid rgba(42,36,30,.08);
-}
+    @keyframes leafFloat {
 
-.about__avatar{
-  width:82px;
-  height:82px;
+      0%,100% {
+        transform: translateY(0) rotate(-1deg);
+      }
 
-  border-radius:50%;
+      50% {
+        transform: translateY(-10px) rotate(1deg);
+      }
+    }
 
-  border:1.5px dashed rgba(122,103,83,.55);
+    /* Etiqueta */
 
-  display:flex;
+    .mindbot-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
 
-  align-items:center;
+      padding: 9px 17px;
 
-  justify-content:center;
+      border-radius: 999px;
 
-  font-family:var(--font-serif);
+      background: rgba(255,255,255,.55);
 
-  font-size:1.5rem;
+      border: 1px solid rgba(124,139,111,.25);
 
-  color:var(--taupe);
+      color: var(--sage-deep);
 
-  margin-bottom:1.3rem;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .14em;
 
-  background:var(--beige);
-}
+      text-transform: uppercase;
+    }
 
-.about__creator-name{
-  font-family:var(--font-serif);
+    .mindbot-label::before {
+      content: "";
 
-  font-size:1.4rem;
+      width: 7px;
+      height: 7px;
 
-  color:var(--ink);
-}
+      border-radius: 50%;
 
-.about__creator-role{
-  margin-top:.2rem;
+      background: var(--sage);
 
-  font-size:.88rem;
+      box-shadow:
+        0 0 0 5px rgba(124,139,111,.10);
+    }
 
-  color:var(--taupe);
+    /* Título */
 
-  font-weight:600;
+    .mindbot-title {
+      max-width: 800px;
 
-  letter-spacing:.02em;
-}
+      margin: 20px auto 0;
 
-.about__creator-quote{
-  margin-top:1.1rem;
+      font-family: "Fraunces", serif;
 
-  font-size:.92rem;
+      font-size: clamp(3.4rem, 7vw, 6.3rem);
 
-  color:var(--ink-soft);
-}
+      line-height: .92;
 
-@media (max-width:860px){
+      letter-spacing: -.06em;
 
-  .about__grid{
-    grid-template-columns:1fr;
-  }
-}
+      font-weight: 600;
+    }
 
-/* ============================================================
-   FINAL CTA
-   ============================================================ */
+    .mindbot-title em {
+      color: var(--sage-deep);
+      font-style: italic;
+    }
 
-.cta-final{
-  background:var(--beige-deep);
+    .mindbot-description {
+      max-width: 570px;
 
-  text-align:center;
-}
+      margin: 27px auto 0;
 
-.cta-final__title{
-  font-size:var(--fs-h2);
+      color: var(--ink-soft);
 
-  max-width:18ch;
+      font-size: .96rem;
+      line-height: 1.8;
+    }
 
-  margin-inline:auto;
+    /* Escenario */
 
-  margin-top:.9rem;
-}
+    .mindbot-stage {
+      width: min(700px, 95vw);
+      height: 450px;
 
-.cta-final__text{
-  margin-top:1.1rem;
+      margin: 25px auto 0;
 
-  font-size:var(--fs-lead);
+      position: relative;
 
-  color:var(--ink-soft);
-}
+      perspective: 1300px;
+    }
 
-.cta-final .btn{
-  margin-top:2.2rem;
-}
+    /* Aura */
 
-.cta-final .eyebrow{
-  justify-content:center;
+    .mindbot-aura {
+      position: absolute;
 
-  width:100%;
-}
+      width: 430px;
+      height: 430px;
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+      left: 50%;
+      top: 50%;
 
-.footer{
-  background:var(--ink);
+      transform: translate(-50%, -50%);
 
-  color:var(--ivory);
+      border-radius: 50%;
 
-  padding-block:clamp(3rem,6vw,5rem) 2rem;
-}
+      background:
+        radial-gradient(
+          circle,
+          rgba(168,173,138,.30) 0%,
+          rgba(168,173,138,.13) 35%,
+          transparent 70%
+        );
 
-.footer__top{
-  display:flex;
+      filter: blur(5px);
 
-  justify-content:space-between;
+      animation: auraPulse 5s ease-in-out infinite;
+    }
 
-  align-items:flex-end;
+    @keyframes auraPulse {
 
-  flex-wrap:wrap;
+      0%,100% {
+        transform: translate(-50%,-50%) scale(.94);
+        opacity: .75;
+      }
 
-  gap:2rem;
+      50% {
+        transform: translate(-50%,-50%) scale(1.08);
+        opacity: 1;
+      }
+    }
 
-  padding-bottom:clamp(2.5rem,5vw,3.5rem);
+    /* Sombra */
 
-  border-bottom:1px solid rgba(248,245,238,.14);
-}
+    .mindbot-shadow {
+      position: absolute;
 
-.footer__logo{
-  font-family:var(--font-serif);
+      width: 340px;
+      height: 55px;
 
-  font-style:italic;
+      left: 50%;
+      bottom: 40px;
 
-  font-size:clamp(2.2rem,5vw,3.6rem);
+      transform: translateX(-50%);
 
-  color:var(--ivory);
-}
+      border-radius: 50%;
 
-.footer__tagline{
-  margin-top:.6rem;
+      background: rgba(42,36,30,.17);
 
-  color:rgba(248,245,238,.6);
+      filter: blur(25px);
 
-  font-size:.95rem;
+      animation: shadowFloat 5s ease-in-out infinite;
+    }
 
-  max-width:24rem;
-}
+    @keyframes shadowFloat {
 
-.footer__links{
-  display:flex;
+      0%,100% {
+        transform: translateX(-50%) scale(.9);
+        opacity: .38;
+      }
 
-  flex-direction:column;
+      50% {
+        transform: translateX(-50%) scale(1.05);
+        opacity: .20;
+      }
+    }
 
-  gap:.7rem;
+    /* MINDBOT */
 
-  align-items:flex-end;
-}
+    .mindbot-object {
+      position: absolute;
 
-.footer__links a{
-  color:rgba(248,245,238,.75);
+      width: min(430px, 67vw);
 
-  font-size:.94rem;
+      height: auto;
 
-  transition:color .3s var(--ease);
-}
+      left: 50%;
+      top: 48%;
 
-.footer__links a:hover{
-  color:var(--ivory);
-}
+      transform:
+        translate(-50%,-50%)
+        rotateX(2deg)
+        rotateY(-3deg)
+        translateZ(30px);
 
-.footer__bottom{
-  display:flex;
+      z-index: 4;
 
-  justify-content:space-between;
+      filter:
+        drop-shadow(0 35px 35px rgba(42,36,30,.18))
+        drop-shadow(0 10px 12px rgba(42,36,30,.10));
 
-  align-items:center;
+      animation: mindbotFloat 5s ease-in-out infinite;
 
-  flex-wrap:wrap;
+      transition:
+        transform .6s cubic-bezier(.22,1,.36,1),
+        filter .6s ease;
+    }
 
-  gap:1rem;
+    @keyframes mindbotFloat {
 
-  padding-top:1.6rem;
+      0%,100% {
+        transform:
+          translate(-50%,-50%)
+          rotateX(2deg)
+          rotateY(-3deg)
+          translateY(0)
+          translateZ(30px);
+      }
 
-  font-size:.82rem;
+      50% {
+        transform:
+          translate(-50%,-50%)
+          rotateX(-1deg)
+          rotateY(4deg)
+          translateY(-18px)
+          translateZ(55px);
+      }
+    }
 
-  color:rgba(248,245,238,.45);
-}
+    .mindbot-stage:hover .mindbot-object {
 
-.footer__bottom .mark{
-  width:16px;
-  height:16px;
+      transform:
+        translate(-50%,-50%)
+        rotateX(4deg)
+        rotateY(7deg)
+        translateY(-13px)
+        translateZ(70px);
 
-  color:var(--olive);
-}
+      filter:
+        drop-shadow(0 42px 40px rgba(42,36,30,.20))
+        drop-shadow(0 12px 16px rgba(42,36,30,.12));
+    }
 
-.footer__mark-row{
-  display:flex;
+    /* Destellos */
 
-  align-items:center;
+    .mindbot-spark {
+      position: absolute;
 
-  gap:.5rem;
-}
+      width: 8px;
+      height: 8px;
 
-@media (max-width:640px){
+      border-radius: 50%;
 
-  .footer__top{
-    flex-direction:column;
+      background: #F8F5EE;
 
-    align-items:flex-start;
-  }
+      box-shadow:
+        0 0 15px rgba(248,245,238,.95),
+        0 0 30px rgba(168,173,138,.55);
 
-  .footer__links{
-    align-items:flex-start;
-  }
-}
+      z-index: 7;
+    }
 
-</style>
+    .spark-1 {
+      left: 17%;
+      top: 34%;
+      animation: spark1 4.5s ease-in-out infinite;
+    }
+
+    .spark-2 {
+      right: 17%;
+      top: 28%;
+      width: 6px;
+      height: 6px;
+      animation: spark2 5.5s ease-in-out infinite;
+    }
+
+    .spark-3 {
+      left: 24%;
+      bottom: 28%;
+      width: 5px;
+      height: 5px;
+      animation: spark1 4s ease-in-out infinite;
+    }
+
+    .spark-4 {
+      right: 23%;
+      bottom: 25%;
+      width: 7px;
+      height: 7px;
+      animation: spark2 6s ease-in-out infinite;
+    }
+
+    @keyframes spark1 {
+
+      0%,100% {
+        transform: translate(0,0);
+        opacity: .25;
+      }
+
+      50% {
+        transform: translate(12px,-22px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes spark2 {
+
+      0%,100% {
+        transform: translate(0,0);
+        opacity: .3;
+      }
+
+      50% {
+        transform: translate(-15px,20px);
+        opacity: .95;
+      }
+    }
+
+    /* Tarjetas flotantes */
+
+    .mindbot-card {
+      position: absolute;
+
+      z-index: 8;
+
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      padding: 12px 16px;
+
+      border-radius: 17px;
+
+      background: rgba(254,252,248,.84);
+
+      border: 1px solid rgba(42,36,30,.08);
+
+      box-shadow:
+        0 18px 45px rgba(42,36,30,.10),
+        inset 0 1px 0 rgba(255,255,255,.8);
+
+      backdrop-filter: blur(14px);
+
+      color: var(--ink);
+
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .mindbot-card-icon {
+      width: 31px;
+      height: 31px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background: var(--beige);
+
+      color: var(--sage-deep);
+    }
+
+    .card-left {
+      left: 2%;
+      top: 38%;
+
+      animation: cardLeft 5s ease-in-out infinite;
+    }
+
+    .card-right {
+      right: 2%;
+      top: 53%;
+
+      animation: cardRight 5.5s ease-in-out infinite;
+    }
+
+    @keyframes cardLeft {
+
+      0%,100% {
+        transform: translateY(0) rotate(-2deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(1deg);
+      }
+    }
+
+    @keyframes cardRight {
+
+      0%,100% {
+        transform: translateY(0) rotate(2deg);
+      }
+
+      50% {
+        transform: translateY(-15px) rotate(-1deg);
+      }
+    }
+
+
+    /* =====================================================
+       FUNCIONES
+       ===================================================== */
+
+    .features {
+      background: var(--beige);
+    }
+
+    .features-grid {
+      margin-top: 65px;
+
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 38px;
+
+      min-height: 270px;
+
+      border-radius: 28px;
+
+      background: var(--white);
+
+      border: 1px solid rgba(42,36,30,.06);
+
+      transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 17px;
+
+      background: var(--beige);
+
+      font-size: 1.25rem;
+    }
+
+    .feature h3 {
+      margin-top: 55px;
+
+      font-family: "Fraunces", serif;
+      font-size: 2rem;
+    }
+
+    .feature p {
+      max-width: 500px;
+
+      margin-top: 10px;
+
+      color: var(--ink-soft);
+
+      line-height: 1.75;
+      font-size: .86rem;
+    }
+
+
+    /* =====================================================
+       FRASE
+       ===================================================== */
+
+    .quote {
+      padding: 150px 6%;
+
+      background: var(--sage-deep);
+
+      color: var(--white);
+
+      text-align: center;
+    }
+
+    .quote__inner {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .quote-mark {
+      font-family: "Fraunces", serif;
+      font-size: 5rem;
+      line-height: .5;
+      opacity: .4;
+    }
+
+    .quote blockquote {
+      margin-top: 30px;
+
+      font-family: "Fraunces", serif;
+
+      font-size: clamp(2.5rem, 5vw, 5rem);
+
+      line-height: 1;
+
+      letter-spacing: -.045em;
+    }
+
+    .quote p {
+      margin-top: 28px;
+
+      font-size: .8rem;
+      opacity: .7;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       ESTADÍSTICAS
+       ===================================================== */
+
+    .stats {
+      padding: 90px 6%;
+
+      background: var(--ivory-deep);
+    }
+
+    .stats-grid {
+      max-width: 1100px;
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: "Fraunces", serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      color: var(--sage-deep);
+    }
+
+    .stat-label {
+      margin-top: 7px;
+
+      font-size: .78rem;
+      color: var(--ink-soft);
+    }
+
+
+    /* =====================================================
+       SOBRE MINDBUY
+       ===================================================== */
+
+    .about-grid {
+      margin-top: 70px;
+
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 70px;
+
+      align-items: center;
+    }
+
+    .creator-card {
+      padding: 35px;
+
+      border-radius: 30px;
+
+      background: var(--beige);
+
+      text-align: center;
+    }
+
+    .creator-avatar {
+      width: 150px;
+      height: 150px;
+
+      margin: auto;
+
+      border-radius: 50%;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--sage-deep);
+      color: var(--white);
+
+      font-family: "Fraunces", serif;
+      font-size: 2.7rem;
+    }
+
+    .creator-card h3 {
+      margin-top: 22px;
+
+      font-family: "Fraunces", serif;
+      font-size: 1.8rem;
+    }
+
+    .creator-card p {
+      margin-top: 7px;
+
+      font-size: .8rem;
+      color: var(--ink-soft);
+    }
+
+    .about-text h3 {
+      font-family: "Fraunces", serif;
+
+      font-size: clamp(2.5rem, 4vw, 4rem);
+
+      line-height: 1;
+
+      letter-spacing: -.05em;
+    }
+
+    .about-text h3 em {
+      color: var(--sage-deep);
+    }
+
+    .about-text p {
+      margin-top: 22px;
+
+      color: var(--ink-soft);
+
+      line-height: 1.85;
+    }
+
+
+    /* =====================================================
+       CTA FINAL
+       ===================================================== */
+
+    .final-cta {
+      padding: 130px 6%;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(168,173,138,.25),
+          transparent 55%
+        ),
+        var(--beige);
+    }
+
+    .final-box {
+      max-width: 1100px;
+
+      margin: auto;
+
+      padding: 75px 7%;
+
+      border-radius: 40px;
+
+      background: var(--white);
+
+      text-align: center;
+
+      box-shadow: var(--shadow);
+    }
+
+    .final-box h2 {
+      max-width: 800px;
+
+      margin: auto;
+
+      font-family: "Fraunces", serif;
+
+      font-size: clamp(3rem, 6vw, 5.5rem);
+
+      line-height: .95;
+
+      letter-spacing: -.06em;
+    }
+
+    .final-box h2 em {
+      color: var(--sage-deep);
+    }
+
+    .final-box p {
+      max-width: 540px;
+
+      margin: 25px auto 32px;
+
+      color: var(--ink-soft);
+
+      line-height: 1.7;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    footer {
+      padding: 55px 6% 30px;
+
+      background: var(--ink);
+
+      color: var(--white);
+    }
+
+    .footer-top {
+      max-width: 1200px;
+
+      margin: auto;
+
+      display: flex;
+
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 50px;
+    }
+
+    .footer-logo {
+      font-family: "Fraunces", serif;
+
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .footer-description {
+      max-width: 330px;
+
+      margin-top: 12px;
+
+      font-size: .78rem;
+      line-height: 1.7;
+
+      opacity: .6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 35px;
+
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .footer-links a {
+      opacity: .65;
+      transition: opacity .2s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+
+      margin: 60px auto 0;
+      padding-top: 20px;
+
+      border-top: 1px solid rgba(255,255,255,.10);
+
+      display: flex;
+      justify-content: space-between;
+
+      font-size: .68rem;
+
+      opacity: .45;
+    }
+
+
+    /* =====================================================
+       ANIMACIONES DE APARICIÓN
+       ===================================================== */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+
+      transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.22,1,.36,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 900px) {
+
+      .nav__links {
+        display: none;
+      }
+
+      .nav__cta {
+        display: none;
+      }
+
+      .mobile-button {
+        display: grid;
+        place-items: center;
+      }
+
+      .mobile-menu {
+        position: fixed;
+
+        top: 75px;
+        left: 5%;
+        right: 5%;
+
+        padding: 20px;
+
+        border-radius: 24px;
+
+        background: rgba(254,252,248,.95);
+
+        backdrop-filter: blur(20px);
+
+        box-shadow: var(--shadow);
+
+        z-index: 999;
+      }
+
+      .mobile-menu.active {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+      }
+
+      .mobile-menu a {
+        padding: 8px;
+
+        font-size: .85rem;
+        font-weight: 700;
+      }
+
+      .hero__inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 125px;
+      }
+
+      .hero-phone {
+        width: min(330px, 80%);
+      }
+
+      .problem-grid,
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        flex-direction: column;
+      }
+    }
+
+
+    @media (max-width: 600px) {
+
+      .hero {
+        padding: 115px 20px 70px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.3rem, 16vw, 5rem);
+      }
+
+      .hero__text {
+        font-size: .92rem;
+      }
+
+      .hero__buttons {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-phone {
+        width: min(300px, 90%);
+      }
+
+      .phone-screen {
+        min-height: 560px;
+      }
+
+      .section {
+        padding: 85px 20px;
+      }
+
+      .problem-grid,
+      .steps,
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mindbot-section {
+        min-height: 800px;
+
+        padding:
+          90px 20px
+          80px;
+      }
+
+      .mindbot-section::before {
+        width: 500px;
+        height: 500px;
+      }
+
+      .mindbot-leaf {
+        width: 145px;
+      }
+
+      .mindbot-title {
+        font-size: clamp(3rem, 15vw, 4.5rem);
+      }
+
+      .mindbot-description {
+        font-size: .88rem;
+      }
+
+      .mindbot-stage {
+        height: 360px;
+      }
+
+      .mindbot-object {
+        width: min(320px, 76vw);
+      }
+
+      .mindbot-aura {
+        width: 320px;
+        height: 320px;
+      }
+
+      .mindbot-shadow {
+        width: 250px;
+      }
+
+      .mindbot-card {
+        display: none;
+      }
+
+      .mindbot-spark {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .quote {
+        padding: 100px 20px;
+      }
+
+      .final-cta {
+        padding: 80px 20px;
+      }
+
+      .final-box {
+        padding: 55px 22px;
+        border-radius: 30px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+
+    /* =====================================================
+       REDUCIR MOVIMIENTO
+       ===================================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-<!-- ============================================================
-     ICON SPRITE
-     ============================================================ -->
 
-<svg style="display:none" aria-hidden="true">
-  <defs>
+  <!-- =====================================================
+       NAVBAR
+       ===================================================== -->
 
-    <symbol id="icon-mark" viewBox="0 0 24 24">
-      <rect x="6" y="4" width="3.4" height="16" rx="1.7" fill="currentColor"/>
-      <rect x="14.6" y="8.5" width="3.4" height="11.5" rx="1.7" fill="currentColor"/>
-    </symbol>
+  <header class="nav" id="navbar">
 
-    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-      <line x1="4" y1="7" x2="20" y2="7"/>
-      <line x1="4" y1="12" x2="20" y2="12"/>
-      <line x1="4" y1="17" x2="20" y2="17"/>
-    </symbol>
+    <div class="nav__inner">
 
-    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-      <line x1="5" y1="5" x2="19" y2="19"/>
-      <line x1="19" y1="5" x2="5" y2="19"/>
-    </symbol>
-
-    <symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="4" y1="12" x2="19" y2="12"/>
-      <polyline points="13 6 19 12 13 18"/>
-    </symbol>
-
-    <symbol id="icon-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 20c0-9 6-15 16-16 -1 10-7 16-16 16Z"/>
-      <path d="M6 18c3-4 6-7 12-13"/>
-    </symbol>
-
-    <symbol id="icon-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M11 4h6a3 3 0 0 1 3 3v6L10 23 1 14Z"/>
-      <circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/>
-    </symbol>
-
-    <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3.5" y="4.5" width="4" height="4" rx="1"/>
-      <path d="M10.5 6.5h10"/>
-      <rect x="3.5" y="14.5" width="4" height="4" rx="1"/>
-      <path d="M10.5 16.5h10"/>
-    </symbol>
-
-    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 20V10"/>
-      <path d="M11 20V4"/>
-      <path d="M18 20v-7"/>
-      <path d="M2.5 20h19"/>
-    </symbol>
-
-    <symbol id="icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M2.5 12h4l2.2-6 4.6 12 2.2-6H21.5"/>
-    </symbol>
-
-    <symbol id="icon-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 21V11"/>
-      <path d="M12 11C12 6 7 5 4 5c0 4 2 8 8 8Z"/>
-      <path d="M12 11c0-4 4-6 8-6 0 5-2 9-8 9Z"/>
-    </symbol>
-
-    <symbol id="icon-guardar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 3.5h12v17l-6-4-6 4Z"/>
-    </symbol>
-
-    <symbol id="icon-espera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="8.5"/>
-      <path d="M12 7.5V12l3 2.2"/>
-    </symbol>
-
-    <symbol id="icon-reflexiona" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3Z"/>
-      <path d="M9.5 21.5h5"/>
-    </symbol>
-
-    <symbol id="icon-decide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4.5 12.5 9 17l10.5-11"/>
-    </symbol>
-
-  </defs>
-</svg>
-
-<!-- ============================================================
-     NAVBAR
-     ============================================================ -->
-
-<header class="nav" id="nav">
-
-  <div class="container nav__inner">
-
-    <a href="#inicio" class="nav__logo">
-      <svg class="mark">
-        <use href="#icon-mark"/>
-      </svg>
-      <span>MindBuy</span>
-    </a>
-
-    <nav class="nav__links" aria-label="Navegación principal">
-
-      <a class="nav__link" href="#inicio" data-scroll>
-        Inicio
+      <a href="#" class="logo">
+        <span class="logo-mark">M</span>
+        MindBuy
       </a>
 
-      <a class="nav__link" href="#como-funciona" data-scroll>
-        Cómo funciona
-      </a>
+      <nav class="nav__links">
 
-      <a class="nav__link" href="#funciones" data-scroll>
-        Funciones
-      </a>
+        <a href="#problema">El problema</a>
 
-      <a class="nav__link" href="#sobre" data-scroll>
-        Sobre MindBuy
-      </a>
+        <a href="#como-funciona">Cómo funciona</a>
 
-    </nav>
+        <a href="#mindbot">Mindbot</a>
 
-    <div class="nav__right">
+        <a href="#funciones">Funciones</a>
 
-      <!-- BOTÓN NAVBAR → APP -->
-      <a
-        href="https://mindbuy-co.vercel.app/"
-        class="btn btn-primary"
-      >
-        Comenzar
-        <svg>
-          <use href="#icon-arrow"/>
-        </svg>
-      </a>
+        <a href="#sobre">Sobre MindBuy</a>
+
+        <a
+          href="https://mindbuy-co.vercel.app/"
+          class="nav__cta"
+        >
+          Comenzar
+        </a>
+
+      </nav>
 
       <button
-        class="nav__toggle"
-        id="navToggle"
+        class="mobile-button"
+        id="mobileButton"
         aria-label="Abrir menú"
-        aria-expanded="false"
       >
-        <svg class="icon-menu">
-          <use href="#icon-menu"/>
-        </svg>
-
-        <svg class="icon-close">
-          <use href="#icon-close"/>
-        </svg>
+        ☰
       </button>
 
     </div>
 
-  </div>
+  </header>
 
-  <!-- MENÚ MÓVIL -->
-  <div class="nav__mobile" id="navMobile">
 
-    <a href="#inicio" data-scroll>
-      Inicio
-    </a>
+  <!-- =====================================================
+       MENÚ MÓVIL
+       ===================================================== -->
 
-    <a href="#como-funciona" data-scroll>
-      Cómo funciona
-    </a>
+  <div class="mobile-menu" id="mobileMenu">
 
-    <a href="#funciones" data-scroll>
-      Funciones
-    </a>
+    <a href="#problema">El problema</a>
 
-    <a href="#sobre" data-scroll>
-      Sobre MindBuy
-    </a>
+    <a href="#como-funciona">Cómo funciona</a>
 
-    <!-- MENÚ MÓVIL → APP -->
+    <a href="#mindbot">Mindbot</a>
+
+    <a href="#funciones">Funciones</a>
+
+    <a href="#sobre">Sobre MindBuy</a>
+
     <a
       href="https://mindbuy-co.vercel.app/"
-      class="btn btn-primary"
     >
-      Comenzar ahora
-
-      <svg>
-        <use href="#icon-arrow"/>
-      </svg>
+      Comenzar con MindBuy
     </a>
 
   </div>
 
-</header>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
+  <!-- =====================================================
+       HERO
+       ===================================================== -->
 
-<section class="hero" id="inicio">
+  <main>
 
-  <div class="decor decor--leaf">
-    <svg>
-      <use href="#icon-leaf"/>
-    </svg>
-  </div>
+    <section class="hero">
 
-  <div class="decor decor--tag">
-    <svg>
-      <use href="#icon-tag"/>
-    </svg>
-  </div>
+      <div class="hero__inner">
 
-  <span class="decor decor--dot"></span>
+        <div class="hero__content reveal">
 
-  <div class="container hero__inner">
+          <div class="eyebrow">
+            Consumo consciente
+          </div>
 
-    <div class="hero__copy">
+          <h1>
+            Compra menos.
+            <em>Piensa más.</em>
+            Elige mejor.
+          </h1>
 
-      <h1 class="hero__title">
+          <p class="hero__text">
+            MindBuy es una herramienta que te ayuda a pausar,
+            reflexionar y decidir antes de comprar. Porque consumir
+            mejor empieza por preguntarte si realmente lo necesitas.
+          </p>
 
-        <span class="hero__title-line">
-          <span style="--d:.05s">
-            <em>Compra</em> menos.
-          </span>
-        </span>
+          <div class="hero__buttons">
 
-        <span class="hero__title-line">
-          <span style="--d:.18s">
-            <em>Piensa</em> más.
-          </span>
-        </span>
+            <a
+              href="https://mindbuy-co.vercel.app/"
+              class="button button--primary"
+            >
+              Comenzar ahora
+            </a>
 
-        <span class="hero__title-line">
-          <span style="--d:.31s">
-            <em>Elige</em> mejor.
-          </span>
-        </span>
+            <a
+              href="#como-funciona"
+              class="button button--secondary"
+            >
+              Descubrir MindBuy
+            </a>
 
-      </h1>
+          </div>
 
-      <p class="hero__subtitle">
-        MindBuy te ayuda a detenerte antes de comprar,
-        entender tus hábitos y tomar decisiones de consumo
-        más conscientes.
-      </p>
+        </div>
 
-      <div class="hero__actions">
 
-        <!-- HERO → APP -->
+        <div class="hero-phone reveal">
+
+          <div class="phone-shell">
+
+            <div class="phone-screen">
+
+              <div class="phone-top">
+
+                <div class="phone-brand">
+                  MindBuy
+                </div>
+
+                <div class="phone-circle">
+                  SG
+                </div>
+
+              </div>
+
+              <h2 class="phone-title">
+                ¿Lo necesitas
+                realmente?
+              </h2>
+
+              <p class="phone-subtitle">
+                Haz una pausa antes de decidir.
+              </p>
+
+
+              <div class="phone-card">
+
+                <div class="phone-card__top">
+
+                  <div class="phone-icon">
+                    ✦
+                  </div>
+
+                  <div>
+                    <strong>
+                      Lista de reflexión
+                    </strong>
+
+                    <small>
+                      Espera 72 horas
+                    </small>
+                  </div>
+
+                </div>
+
+                <div class="phone-line"></div>
+                <div class="phone-line short"></div>
+
+              </div>
+
+
+              <div class="phone-card">
+
+                <div class="phone-card__top">
+
+                  <div class="phone-icon">
+                    ♡
+                  </div>
+
+                  <div>
+                    <strong>
+                      Compra consciente
+                    </strong>
+
+                    <small>
+                      Decide con intención
+                    </small>
+                  </div>
+
+                </div>
+
+                <div class="phone-line"></div>
+                <div class="phone-line short"></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         PROBLEMA
+         =================================================== -->
+
+    <section class="section problem" id="problema">
+
+      <div class="section__inner">
+
+        <div class="section-heading reveal">
+
+          <div class="eyebrow">
+            Antes de comprar
+          </div>
+
+          <h2>
+            No siempre compramos
+            porque <em>lo necesitamos.</em>
+          </h2>
+
+          <p>
+            Muchas decisiones de compra suceden demasiado rápido.
+            Una oferta, una tendencia o simplemente un impulso pueden
+            convertir un “lo quiero” en una compra que realmente no
+            necesitábamos.
+          </p>
+
+        </div>
+
+
+        <div class="problem-grid">
+
+          <article class="problem-card reveal">
+
+            <div class="problem-number">
+              01
+            </div>
+
+            <div>
+
+              <h3>
+                El impulso
+              </h3>
+
+              <p>
+                Compramos antes de tener tiempo para preguntarnos
+                si realmente queremos aquello.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="problem-card reveal">
+
+            <div class="problem-number">
+              02
+            </div>
+
+            <div>
+
+              <h3>
+                La influencia
+              </h3>
+
+              <p>
+                Tendencias, redes sociales y publicidad pueden
+                transformar un deseo pasajero en una necesidad aparente.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="problem-card reveal">
+
+            <div class="problem-number">
+              03
+            </div>
+
+            <div>
+
+              <h3>
+                El después
+              </h3>
+
+              <p>
+                Una compra impulsiva puede terminar en arrepentimiento,
+                desperdicio o simplemente en algo que dejamos de utilizar.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         COMO FUNCIONA
+         =================================================== -->
+
+    <section class="section" id="como-funciona">
+
+      <div class="section__inner">
+
+        <div class="section-heading reveal">
+
+          <div class="eyebrow">
+            Una pausa cambia la decisión
+          </div>
+
+          <h2>
+            Compra desde la
+            <em>intención.</em>
+          </h2>
+
+          <p>
+            MindBuy convierte ese pequeño momento antes de comprar
+            en una oportunidad para pensar.
+          </p>
+
+        </div>
+
+
+        <div class="steps">
+
+          <article class="step reveal">
+
+            <div class="step-number">
+              01
+            </div>
+
+            <h3>
+              Guarda
+            </h3>
+
+            <p>
+              Añade aquello que estás pensando comprar a tu lista
+              de reflexión.
+            </p>
+
+          </article>
+
+
+          <article class="step reveal">
+
+            <div class="step-number">
+              02
+            </div>
+
+            <h3>
+              Espera
+            </h3>
+
+            <p>
+              Date 72 horas antes de tomar una decisión definitiva.
+            </p>
+
+          </article>
+
+
+          <article class="step reveal">
+
+            <div class="step-number">
+              03
+            </div>
+
+            <h3>
+              Reflexiona
+            </h3>
+
+            <p>
+              Pregúntate por qué lo quieres, qué necesitas y qué
+              impacto puede tener esa compra.
+            </p>
+
+          </article>
+
+
+          <article class="step reveal">
+
+            <div class="step-number">
+              04
+            </div>
+
+            <h3>
+              Decide
+            </h3>
+
+            <p>
+              Compra solamente cuando la decisión siga teniendo
+              sentido para ti.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MINDBOT
+         =================================================== -->
+
+    <section class="mindbot-section" id="mindbot">
+
+      <div class="mindbot-container">
+
+
+        <!-- IMAGEN MONSTERA -->
+
+        <img
+          src="landing.png"
+          alt="Monstera decorativa de MindBuy"
+          class="mindbot-leaf reveal"
+        >
+
+
+        <div class="mindbot-label">
+          Conoce a Mindbot
+        </div>
+
+
+        <h2 class="mindbot-title reveal">
+          Tu pausa antes de
+          <em>comprar.</em>
+        </h2>
+
+
+        <p class="mindbot-description reveal">
+          Mindbot está aquí para acompañarte a pensar antes de comprar.
+          No decide por ti. Te ayuda a hacer una pausa, cuestionar el
+          impulso y elegir de una manera más consciente.
+        </p>
+
+
+        <!-- ESCENARIO -->
+
+        <div class="mindbot-stage">
+
+
+          <div class="mindbot-aura"></div>
+
+
+          <div class="mindbot-spark spark-1"></div>
+
+          <div class="mindbot-spark spark-2"></div>
+
+          <div class="mindbot-spark spark-3"></div>
+
+          <div class="mindbot-spark spark-4"></div>
+
+
+          <div class="mindbot-shadow"></div>
+
+
+          <!-- MINDBOT -->
+
+          <img
+            src="mindbot.png"
+            alt="Mindbot, asistente de MindBuy"
+            class="mindbot-object"
+          >
+
+
+          <!-- TARJETA IZQUIERDA -->
+
+          <div class="mindbot-card card-left">
+
+            <div class="mindbot-card-icon">
+              ✦
+            </div>
+
+            <span>
+              ¿Realmente lo necesitas?
+            </span>
+
+          </div>
+
+
+          <!-- TARJETA DERECHA -->
+
+          <div class="mindbot-card card-right">
+
+            <div class="mindbot-card-icon">
+              ♡
+            </div>
+
+            <span>
+              Compra con intención
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FUNCIONES
+         =================================================== -->
+
+    <section class="section features" id="funciones">
+
+      <div class="section__inner">
+
+        <div class="section-heading reveal">
+
+          <div class="eyebrow">
+            Herramientas para ti
+          </div>
+
+          <h2>
+            Pequeñas herramientas,
+            <em>grandes pausas.</em>
+          </h2>
+
+          <p>
+            MindBuy reúne diferentes herramientas para que puedas
+            entender tus hábitos y tomar decisiones de consumo
+            más conscientes.
+          </p>
+
+        </div>
+
+
+        <div class="features-grid">
+
+
+          <article class="feature reveal">
+
+            <div class="feature-icon">
+              ⏳
+            </div>
+
+            <h3>
+              Lista de reflexión
+            </h3>
+
+            <p>
+              Guarda aquello que quieres comprar y espera 72 horas
+              antes de decidir. El tiempo puede ayudarte a distinguir
+              entre una necesidad y un impulso.
+            </p>
+
+          </article>
+
+
+          <article class="feature reveal">
+
+            <div class="feature-icon">
+              ◌
+            </div>
+
+            <h3>
+              Tracker de compras
+            </h3>
+
+            <p>
+              Registra tus compras y clasifícalas como necesarias,
+              planeadas o impulsivas para empezar a reconocer tus
+              propios patrones.
+            </p>
+
+          </article>
+
+
+          <article class="feature reveal">
+
+            <div class="feature-icon">
+              ?
+            </div>
+
+            <h3>
+              Evaluación de hábitos
+            </h3>
+
+            <p>
+              Responde 12 preguntas y descubre diferentes aspectos
+              de la manera en que consumes.
+            </p>
+
+          </article>
+
+
+          <article class="feature reveal">
+
+            <div class="feature-icon">
+              ♧
+            </div>
+
+            <h3>
+              Alternativas éticas
+            </h3>
+
+            <p>
+              Explora opciones y marcas que buscan producir de una
+              manera más responsable.
+            </p>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FRASE
+         =================================================== -->
+
+    <section class="quote">
+
+      <div class="quote__inner reveal">
+
+        <div class="quote-mark">
+          “
+        </div>
+
+        <blockquote>
+          Comprar mejor no significa
+          dejar de comprar.
+          Significa empezar a elegir.
+        </blockquote>
+
+        <p>
+          MindBuy
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ESTADÍSTICAS
+         =================================================== -->
+
+    <section class="stats">
+
+      <div class="stats-grid">
+
+        <div class="reveal">
+
+          <div class="stat-number">
+            72h
+          </div>
+
+          <div class="stat-label">
+            para reflexionar
+          </div>
+
+        </div>
+
+
+        <div class="reveal">
+
+          <div class="stat-number">
+            12
+          </div>
+
+          <div class="stat-label">
+            preguntas sobre tus hábitos
+          </div>
+
+        </div>
+
+
+        <div class="reveal">
+
+          <div class="stat-number">
+            1
+          </div>
+
+          <div class="stat-label">
+            decisión más consciente
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SOBRE MINDBUY
+         =================================================== -->
+
+    <section class="section" id="sobre">
+
+      <div class="section__inner">
+
+        <div class="section-heading reveal">
+
+          <div class="eyebrow">
+            Sobre MindBuy
+          </div>
+
+          <h2>
+            Una idea que empieza
+            con una <em>pregunta.</em>
+          </h2>
+
+        </div>
+
+
+        <div class="about-grid">
+
+
+          <div class="creator-card reveal">
+
+            <div class="creator-avatar">
+              SG
+            </div>
+
+            <h3>
+              Sarah Guerra
+            </h3>
+
+            <p>
+              Creadora de MindBuy
+            </p>
+
+          </div>
+
+
+          <div class="about-text reveal">
+
+            <h3>
+              ¿Y si antes de comprar
+              simplemente
+              <em>paramos?</em>
+            </h3>
+
+            <p>
+              MindBuy nace de una idea sencilla: no necesitamos
+              consumir menos por obligación, sino aprender a consumir
+              con más intención.
+            </p>
+
+            <p>
+              La aplicación busca convertir ese pequeño instante
+              entre “lo quiero” y “lo compro” en un espacio para
+              reflexionar, entender nuestros hábitos y tomar decisiones
+              que realmente tengan sentido.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CTA
+         =================================================== -->
+
+    <section class="final-cta">
+
+      <div class="final-box reveal">
+
+        <h2>
+          Tu próxima compra
+          puede empezar con una
+          <em>pausa.</em>
+        </h2>
+
+        <p>
+          Descubre MindBuy y empieza a tomar decisiones de consumo
+          más conscientes, una compra a la vez.
+        </p>
+
         <a
           href="https://mindbuy-co.vercel.app/"
-          class="btn btn-primary"
+          class="button button--primary"
         >
-          Comenzar ahora
-
-          <svg>
-            <use href="#icon-arrow"/>
-          </svg>
-        </a>
-
-        <!-- HERO → SECCIÓN -->
-        <a
-          href="#como-funciona"
-          class="btn btn-secondary"
-          data-scroll
-        >
-          Descubrir MindBuy
-
-          <svg>
-            <use href="#icon-arrow"/>
-          </svg>
+          Comenzar con MindBuy
         </a>
 
       </div>
 
-    </div>
+    </section>
 
-    <div class="hero__visual">
+  </main>
 
-      <div class="phone">
 
-        <div class="phone__notch"></div>
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
-        <div class="phone__screen">
+  <footer>
 
-          <div class="app-status">
-
-            <span class="app-status__brand">
-              MINDBUY
-            </span>
-
-            <svg class="mark">
-              <use href="#icon-mark"/>
-            </svg>
-
-          </div>
-
-          <div class="app-card">
-
-            <div class="app-card__top">
-
-              <div>
-
-                <div class="app-card__product">
-                  Chaqueta de lana
-                </div>
-
-                <div class="app-card__price">
-                  $248.000
-                </div>
-
-              </div>
-
-              <span class="app-card__tag">
-                En pausa
-              </span>
-
-            </div>
-
-            <div class="app-card__timer">
-
-              <span class="app-card__ring"></span>
-
-              <span class="app-card__timer-text">
-                Tiempo de reflexión
-                <b>68h restantes</b>
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="app-card">
-
-            <div class="app-card__top">
-
-              <div>
-
-                <div class="app-card__product">
-                  Audífonos inalámbricos
-                </div>
-
-                <div class="app-card__price">
-                  $189.000
-                </div>
-
-              </div>
-
-              <span class="app-card__tag">
-                Planificada
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="app-mini">
-
-            <span class="app-mini__pill">
-              <svg>
-                <use href="#icon-espera"/>
-              </svg>
-            </span>
-
-            <span class="app-mini__pill filled">
-              <svg>
-                <use href="#icon-decide"/>
-              </svg>
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     EL PROBLEMA
-     ============================================================ -->
-
-<section class="section problem" id="problema">
-
-  <div class="container problem__grid">
-
-    <div class="problem__phrases">
-
-      <p class="problem__phrase" data-reveal>
-        Lo vi.
-      </p>
-
-      <p class="problem__phrase" data-reveal>
-        Lo quise.
-      </p>
-
-      <p class="problem__phrase" data-reveal>
-        Lo compré.
-      </p>
-
-      <p class="problem__phrase" data-reveal>
-        ¿Lo necesitaba?
-      </p>
-
-    </div>
-
-    <div class="problem__col-right" data-reveal>
-
-      <span class="eyebrow">
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        El problema
-      </span>
-
-      <h2 class="section-title">
-        ¿Realmente necesitas comprarlo?
-      </h2>
-
-      <p
-        class="problem__lede"
-        style="margin-top:1.3rem"
-      >
-        Vivimos rodeados de publicidad,
-        recomendaciones algorítmicas,
-        descuentos y tendencias que se repiten
-        sin parar. Entre tanto estímulo,
-        es fácil que una compra innecesaria
-        se sienta como una decisión.
-      </p>
-
-      <p
-        class="problem__lede"
-        style="margin-top:1rem"
-      >
-        <strong>MindBuy es la pausa</strong>
-        que se inserta entre el impulso y la decisión
-        — el espacio que casi nunca nos damos.
-      </p>
-
-      <div class="problem__mark-row">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        <span>
-          Esa pausa es MindBuy
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     CÓMO FUNCIONA
-     ============================================================ -->
-
-<section
-  class="section how"
-  id="como-funciona"
->
-
-  <div class="container">
-
-    <div data-reveal>
-
-      <span class="eyebrow">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        Cómo funciona
-
-      </span>
-
-      <h2 class="section-title">
-        Una pausa antes de comprar.
-      </h2>
-
-      <p class="how__intro">
-        Cuatro pasos simples que transforman
-        un impulso en una decisión con intención.
-      </p>
-
-    </div>
-
-    <div
-      class="how__timeline"
-      id="howTimeline"
-    >
-
-      <div
-        class="how__line"
-        id="howLine"
-      ></div>
-
-      <div class="how__step" data-step>
-
-        <span class="how__index">
-
-          <svg style="width:18px;height:18px">
-            <use href="#icon-guardar"/>
-          </svg>
-
-        </span>
-
-        <div class="how__body">
-
-          <h3 class="how__title">
-            01 — Guarda
-          </h3>
-
-          <p class="how__text">
-            Añade el producto que estás pensando comprar.
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="how__step" data-step>
-
-        <span class="how__index">
-
-          <svg style="width:18px;height:18px">
-            <use href="#icon-espera"/>
-          </svg>
-
-        </span>
-
-        <div class="how__body">
-
-          <h3 class="how__title">
-            02 — Espera
-          </h3>
-
-          <p class="how__text">
-            MindBuy crea un espacio de reflexión
-            antes de tomar la decisión.
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="how__step" data-step>
-
-        <span class="how__index">
-
-          <svg style="width:18px;height:18px">
-            <use href="#icon-reflexiona"/>
-          </svg>
-
-        </span>
-
-        <div class="how__body">
-
-          <h3 class="how__title">
-            03 — Reflexiona
-          </h3>
-
-          <p class="how__text">
-            Pregúntate si realmente lo necesitas,
-            si estaba planeado y qué impacto tiene tu compra.
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="how__step" data-step>
-
-        <span class="how__index">
-
-          <svg style="width:18px;height:18px">
-            <use href="#icon-decide"/>
-          </svg>
-
-        </span>
-
-        <div class="how__body">
-
-          <h3 class="how__title">
-            04 — Decide
-          </h3>
-
-          <p class="how__text">
-            Compra con intención, o descubre que
-            en realidad no lo necesitabas.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     FUNCIONES
-     ============================================================ -->
-
-<section
-  class="section features"
-  id="funciones"
->
-
-  <div class="container">
-
-    <div data-reveal>
-
-      <span class="eyebrow">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        Funciones
-
-      </span>
-
-      <h2 class="section-title">
-        Tu consumo, pero con intención.
-      </h2>
-
-      <p class="features__intro">
-        Herramientas simples que te acompañan
-        desde el impulso hasta la reflexión.
-      </p>
-
-    </div>
-
-    <div class="features__grid">
-
-      <div class="feature-card" data-reveal>
-
-        <span class="feature-card__index">
-          01
-        </span>
-
-        <div class="feature-card__icon">
-
-          <svg>
-            <use href="#icon-list"/>
-          </svg>
-
-        </div>
-
-        <h3 class="feature-card__title">
-          Lista de reflexión
-        </h3>
-
-        <p class="feature-card__text">
-          Guarda aquello que quieres comprar
-          y date tiempo para pensarlo antes de decidir.
-        </p>
-
-      </div>
-
-      <div
-        class="feature-card"
-        data-reveal
-        style="--reveal-delay:.08s"
-      >
-
-        <span class="feature-card__index">
-          02
-        </span>
-
-        <div class="feature-card__icon">
-
-          <svg>
-            <use href="#icon-chart"/>
-          </svg>
-
-        </div>
-
-        <h3 class="feature-card__title">
-          Tracker de compras
-        </h3>
-
-        <p class="feature-card__text">
-          Registra tus compras y descubre cuáles
-          fueron necesarias, planificadas o impulsivas.
-        </p>
-
-      </div>
-
-      <div
-        class="feature-card"
-        data-reveal
-        style="--reveal-delay:.16s"
-      >
-
-        <span class="feature-card__index">
-          03
-        </span>
-
-        <div class="feature-card__icon">
-
-          <svg>
-            <use href="#icon-pulse"/>
-          </svg>
-
-        </div>
-
-        <h3 class="feature-card__title">
-          Evaluación de hábitos
-        </h3>
-
-        <p class="feature-card__text">
-          Responde preguntas que te ayudan
-          a reconocer patrones en tu manera de consumir.
-        </p>
-
-      </div>
-
-      <div
-        class="feature-card"
-        data-reveal
-        style="--reveal-delay:.24s"
-      >
-
-        <span class="feature-card__index">
-          04
-        </span>
-
-        <div class="feature-card__icon">
-
-          <svg>
-            <use href="#icon-sprout"/>
-          </svg>
-
-        </div>
-
-        <h3 class="feature-card__title">
-          Alternativas éticas
-        </h3>
-
-        <p class="feature-card__text">
-          Descubre opciones y marcas que buscan
-          producir y consumir de una manera más responsable.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     FRASE CENTRAL
-     ============================================================ -->
-
-<section class="quote">
-
-  <svg
-    class="quote__blob"
-    viewBox="0 0 1200 500"
-    preserveAspectRatio="xMidYMid slice"
-  >
-
-    <path
-      d="M0,300 C200,200 350,420 600,350 C850,280 950,120 1200,180 L1200,500 L0,500 Z"
-      fill="rgba(248,245,238,0.05)"
-    />
-
-    <path
-      d="M0,120 C250,60 400,220 650,150 C900,80 1000,240 1200,140"
-      stroke="rgba(248,245,238,0.08)"
-      stroke-width="120"
-      fill="none"
-    />
-
-  </svg>
-
-  <div class="container quote__inner">
-
-    <p
-      class="quote__text"
-      data-reveal
-    >
-
-      Entre querer algo
-
-      <span class="quote__gap">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-      </span>
-
-      y comprarlo existe una decisión.
-
-    </p>
-
-    <p
-      class="quote__sub"
-      data-reveal
-      style="--reveal-delay:.15s"
-    >
-      MindBuy existe para hacer ese espacio más consciente.
-    </p>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     ESTADÍSTICAS
-     ============================================================ -->
-
-<section class="section stats">
-
-  <div class="container">
-
-    <div class="stats__grid">
-
-      <div class="stat" data-reveal>
-
-        <div class="stat__number">
-
-          <span data-count="72">
-            0
-          </span>h
-
-        </div>
-
-        <div class="stat__label">
-          Tiempo de reflexión
-        </div>
-
-      </div>
-
-      <div
-        class="stat"
-        data-reveal
-        style="--reveal-delay:.1s"
-      >
-
-        <div class="stat__number">
-
-          <span data-count="4">
-            0
-          </span>
-
-        </div>
-
-        <div class="stat__label">
-          Herramientas para consumir conscientemente
-        </div>
-
-      </div>
-
-      <div
-        class="stat"
-        data-reveal
-        style="--reveal-delay:.2s"
-      >
-
-        <div class="stat__number">
-
-          <span data-count="1">
-            0
-          </span>
-
-        </div>
-
-        <div class="stat__label">
-          Decisión más consciente
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     SOBRE MINDBUY
-     ============================================================ -->
-
-<section
-  class="section about"
-  id="sobre"
->
-
-  <div class="container about__grid">
-
-    <div data-reveal>
-
-      <span class="eyebrow">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        Sobre MindBuy
-
-      </span>
-
-      <h2 class="about__title">
-        No se trata de comprar menos.
-        Se trata de comprar mejor.
-      </h2>
-
-      <p class="about__lead">
-        El objetivo no es hacer sentir culpable
-        a nadie por comprar.
-      </p>
-
-      <p class="about__text">
-        MindBuy nace para ayudarte a comprender
-        tus propios hábitos de consumo y tomar
-        decisiones más alineadas con tus necesidades
-        y tus valores — sin culpa, con intención.
-      </p>
-
-    </div>
-
-    <div
-      class="about__creator"
-      data-reveal
-      style="--reveal-delay:.15s"
-    >
-
-      <div class="about__avatar">
-        SG
-      </div>
-
-      <div class="about__creator-name">
-        Sarah Guerra
-      </div>
-
-      <div class="about__creator-role">
-        Creadora de MindBuy
-      </div>
-
-      <p class="about__creator-quote">
-        "Quería una herramienta que me diera
-        espacio para pensar antes de comprar —
-        así nació MindBuy."
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     CTA FINAL
-     ============================================================ -->
-
-<section class="section cta-final">
-
-  <div class="container">
-
-    <span
-      class="eyebrow"
-      data-reveal
-    >
-
-      <svg class="mark">
-        <use href="#icon-mark"/>
-      </svg>
-
-      Empieza hoy
-
-    </span>
-
-    <h2
-      class="cta-final__title"
-      data-reveal
-      style="--reveal-delay:.08s"
-    >
-      La próxima compra puede empezar con una pausa.
-    </h2>
-
-    <p
-      class="cta-final__text"
-      data-reveal
-      style="--reveal-delay:.16s"
-    >
-      Haz espacio entre el impulso y la decisión.
-    </p>
-
-    <!-- CTA FINAL → APP -->
-    <a
-      href="https://mindbuy-co.vercel.app/"
-      class="btn btn-primary"
-      data-reveal
-      style="--reveal-delay:.24s"
-    >
-
-      Comenzar con MindBuy
-
-      <svg>
-        <use href="#icon-arrow"/>
-      </svg>
-
-    </a>
-
-  </div>
-
-</section>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-
-<footer class="footer">
-
-  <div class="container">
-
-    <div class="footer__top">
+    <div class="footer-top">
 
       <div>
 
-        <div class="footer__logo">
+        <div class="footer-logo">
           MindBuy
         </div>
 
-        <p class="footer__tagline">
+        <p class="footer-description">
           Compra menos. Piensa más. Elige mejor.
+          Una herramienta para convertir la pausa
+          en una decisión consciente.
         </p>
 
       </div>
 
-      <div class="footer__links">
 
-        <a href="#inicio" data-scroll>
-          Inicio
+      <div class="footer-links">
+
+        <a href="#problema">
+          El problema
         </a>
 
-        <a href="#como-funciona" data-scroll>
-          Cómo funciona
+        <a href="#mindbot">
+          Mindbot
         </a>
 
-        <a href="#funciones" data-scroll>
+        <a href="#funciones">
           Funciones
         </a>
 
-        <a href="#sobre" data-scroll>
+        <a href="#sobre">
           Sobre MindBuy
+        </a>
+
+        <a
+          href="https://instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
         </a>
 
       </div>
 
     </div>
 
-    <div class="footer__bottom">
+
+    <div class="footer-bottom">
 
       <span>
-        © 2026 MindBuy. Todos los derechos reservados.
+        © 2026 MindBuy
       </span>
 
-      <span class="footer__mark-row">
-
-        <svg class="mark">
-          <use href="#icon-mark"/>
-        </svg>
-
-        Hecho con intención
-
+      <span>
+        Consumo consciente, una pausa a la vez.
       </span>
 
     </div>
 
-  </div>
+  </footer>
 
-</footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
-<script>
+  <script>
 
-(function(){
+    /* -----------------------------------------------------
+       NAVBAR AL HACER SCROLL
+       ----------------------------------------------------- */
 
-  "use strict";
+    const navbar = document.getElementById("navbar");
 
-  var reduceMotion =
-    window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    window.addEventListener("scroll", () => {
 
-  var navH = 82;
-
-  /* ==========================================================
-     STICKY NAVBAR
-     ========================================================== */
-
-  var nav =
-    document.getElementById('nav');
-
-  function onScrollNav(){
-
-    if(window.scrollY > 24){
-
-      nav.classList.add('is-scrolled');
-
-    }else{
-
-      nav.classList.remove('is-scrolled');
-
-    }
-
-  }
-
-  onScrollNav();
-
-  window.addEventListener(
-    'scroll',
-    onScrollNav,
-    {passive:true}
-  );
-
-  /* ==========================================================
-     MOBILE MENU
-     ========================================================== */
-
-  var toggle =
-    document.getElementById('navToggle');
-
-  var mobile =
-    document.getElementById('navMobile');
-
-  function closeMenu(){
-
-    mobile.classList.remove('is-open');
-
-    document.body.classList.remove('menu-open');
-
-    toggle.setAttribute(
-      'aria-expanded',
-      'false'
-    );
-
-  }
-
-  function toggleMenu(){
-
-    var open =
-      mobile.classList.toggle('is-open');
-
-    document.body.classList.toggle(
-      'menu-open',
-      open
-    );
-
-    toggle.setAttribute(
-      'aria-expanded',
-      open ? 'true' : 'false'
-    );
-
-  }
-
-  toggle.addEventListener(
-    'click',
-    toggleMenu
-  );
-
-  document.addEventListener(
-    'keydown',
-    function(e){
-
-      if(e.key === 'Escape'){
-        closeMenu();
+      if (window.scrollY > 30) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
       }
-
-    }
-  );
-
-  /* ==========================================================
-     SMOOTH SCROLL
-     ========================================================== */
-
-  document
-    .querySelectorAll('[data-scroll]')
-    .forEach(function(link){
-
-      link.addEventListener(
-        'click',
-        function(e){
-
-          var id =
-            link.getAttribute('href');
-
-          /*
-             IMPORTANTE:
-             Solo los enlaces que empiezan por #
-             hacen smooth scroll.
-
-             Los enlaces https://mindbuy-co.vercel.app/
-             simplemente navegan a la aplicación.
-          */
-
-          if(
-            !id ||
-            id.charAt(0) !== '#'
-          ){
-            return;
-          }
-
-          var target =
-            document.querySelector(id);
-
-          if(!target){
-            return;
-          }
-
-          e.preventDefault();
-
-          closeMenu();
-
-          var top =
-            target.getBoundingClientRect().top +
-            window.pageYOffset -
-            (navH - 10);
-
-          window.scrollTo({
-
-            top:top,
-
-            behavior:
-              reduceMotion
-                ? 'auto'
-                : 'smooth'
-
-          });
-
-        }
-      );
 
     });
 
-  /* ==========================================================
-     SCROLL REVEAL
-     ========================================================== */
 
-  var revealEls =
-    document.querySelectorAll(
-      '[data-reveal]'
-    );
+    /* -----------------------------------------------------
+       MENÚ MÓVIL
+       ----------------------------------------------------- */
 
-  if(
-    'IntersectionObserver'
-    in window
-  ){
+    const mobileButton =
+      document.getElementById("mobileButton");
 
-    var io =
+    const mobileMenu =
+      document.getElementById("mobileMenu");
+
+
+    mobileButton.addEventListener("click", () => {
+
+      mobileMenu.classList.toggle("active");
+
+    });
+
+
+    document
+      .querySelectorAll(".mobile-menu a")
+      .forEach(link => {
+
+        link.addEventListener("click", () => {
+
+          mobileMenu.classList.remove("active");
+
+        });
+
+      });
+
+
+    /* -----------------------------------------------------
+       ANIMACIONES REVEAL
+       ----------------------------------------------------- */
+
+    const revealElements =
+      document.querySelectorAll(".reveal");
+
+
+    const revealObserver =
       new IntersectionObserver(
+        (entries, observer) => {
 
-        function(entries){
+          entries.forEach(entry => {
 
-          entries.forEach(
-            function(entry){
+            if (entry.isIntersecting) {
 
-              if(entry.isIntersecting){
+              entry.target.classList.add("visible");
 
-                entry.target.classList.add(
-                  'is-visible'
-                );
-
-                io.unobserve(
-                  entry.target
-                );
-
-              }
+              observer.unobserve(entry.target);
 
             }
-          );
+
+          });
 
         },
-
         {
-          threshold:.18,
-
-          rootMargin:
-            '0px 0px -40px 0px'
+          threshold: .12
         }
-
       );
 
-    revealEls.forEach(
-      function(el){
-        io.observe(el);
-      }
-    );
 
-  }else{
+    revealElements.forEach(element => {
 
-    revealEls.forEach(
-      function(el){
-        el.classList.add(
-          'is-visible'
-        );
-      }
-    );
+      revealObserver.observe(element);
 
-  }
+    });
 
-  /* ==========================================================
-     CÓMO FUNCIONA — PROGRESS LINE
-     ========================================================== */
 
-  var timeline =
-    document.getElementById(
-      'howTimeline'
-    );
+    /* -----------------------------------------------------
+       EFECTO 3D DEL MINDBOT CON EL MOUSE
+       ----------------------------------------------------- */
 
-  var steps =
-    document.querySelectorAll(
-      '[data-step]'
-    );
+    const mindbotStage =
+      document.querySelector(".mindbot-stage");
 
-  var ticking = false;
+    const mindbotObject =
+      document.querySelector(".mindbot-object");
 
-  function updateTimeline(){
 
-    ticking = false;
+    if (mindbotStage && mindbotObject) {
 
-    if(!timeline){
-      return;
-    }
+      mindbotStage.addEventListener(
+        "mousemove",
+        (event) => {
 
-    var rect =
-      timeline.getBoundingClientRect();
+          const rect =
+            mindbotStage.getBoundingClientRect();
 
-    var vh =
-      window.innerHeight;
+          const x =
+            event.clientX - rect.left;
 
-    var total =
-      rect.height;
+          const y =
+            event.clientY - rect.top;
 
-    var visibleStart =
-      vh * .75;
+          const centerX =
+            rect.width / 2;
 
-    var progressed =
-      visibleStart - rect.top;
+          const centerY =
+            rect.height / 2;
 
-    var progress =
-      total > 0
-        ? progressed / total
-        : 0;
+          const rotateY =
+            ((x - centerX) / centerX) * 7;
 
-    progress =
-      Math.max(
-        0,
-        Math.min(1, progress)
-      );
+          const rotateX =
+            ((y - centerY) / centerY) * -5;
 
-    timeline.style.setProperty(
-      '--progress',
-      progress
-    );
 
-    var activeCount =
-      Math.round(
-        progress * steps.length
-      );
+          mindbotObject.style.animationPlayState =
+            "paused";
 
-    steps.forEach(
-      function(step,i){
 
-        step.classList.toggle(
-          'is-active',
-          i < activeCount
-        );
+          mindbotObject.style.transform =
+            `translate(-50%, -50%)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-10px)
+             translateZ(60px)`;
 
-      }
-    );
-
-  }
-
-  function requestTick(){
-
-    if(!ticking){
-
-      requestAnimationFrame(
-        updateTimeline
-      );
-
-      ticking = true;
-
-    }
-
-  }
-
-  updateTimeline();
-
-  window.addEventListener(
-    'scroll',
-    requestTick,
-    {passive:true}
-  );
-
-  window.addEventListener(
-    'resize',
-    requestTick
-  );
-
-  /* ==========================================================
-     STAT COUNT-UP
-     ========================================================== */
-
-  var counters =
-    document.querySelectorAll(
-      '[data-count]'
-    );
-
-  function animateCounter(el){
-
-    var target =
-      parseInt(
-        el.getAttribute(
-          'data-count'
-        ),
-        10
-      ) || 0;
-
-    if(reduceMotion){
-
-      el.textContent =
-        target;
-
-      return;
-
-    }
-
-    var duration =
-      1100;
-
-    var start = null;
-
-    function step(ts){
-
-      if(start === null){
-        start = ts;
-      }
-
-      var p =
-        Math.min(
-          1,
-          (ts - start) /
-          duration
-        );
-
-      var eased =
-        1 -
-        Math.pow(
-          1 - p,
-          3
-        );
-
-      el.textContent =
-        Math.round(
-          eased * target
-        );
-
-      if(p < 1){
-
-        requestAnimationFrame(
-          step
-        );
-
-      }
-
-    }
-
-    requestAnimationFrame(
-      step
-    );
-
-  }
-
-  if(
-    'IntersectionObserver'
-    in window
-  ){
-
-    var counterIO =
-      new IntersectionObserver(
-
-        function(entries){
-
-          entries.forEach(
-            function(entry){
-
-              if(entry.isIntersecting){
-
-                animateCounter(
-                  entry.target
-                );
-
-                counterIO.unobserve(
-                  entry.target
-                );
-
-              }
-
-            }
-          );
-
-        },
-
-        {
-          threshold:.6
         }
-
       );
 
-    counters.forEach(
-      function(c){
 
-        counterIO.observe(c);
+      mindbotStage.addEventListener(
+        "mouseleave",
+        () => {
 
-      }
-    );
+          mindbotObject.style.animationPlayState =
+            "running";
 
-  }else{
-
-    counters.forEach(
-      function(c){
-
-        c.textContent =
-          c.getAttribute(
-            'data-count'
-          );
-
-      }
-    );
-
-  }
-
-  /* ==========================================================
-     SUBTLE HERO PARALLAX
-     ========================================================== */
-
-  if(!reduceMotion){
-
-    var decorEls =
-      document.querySelectorAll(
-        '.decor'
-      );
-
-    var pTicking = false;
-
-    function updateParallax(){
-
-      pTicking = false;
-
-      var y =
-        window.scrollY;
-
-      decorEls.forEach(
-        function(el,i){
-
-          var speed =
-            (i % 2 === 0)
-              ? .06
-              : -.05;
-
-          el.style.transform =
-            'translateY(' +
-            (y * speed) +
-            'px)';
+          mindbotObject.style.transform = "";
 
         }
       );
 
     }
+
+
+    /* -----------------------------------------------------
+       PARALLAX SUAVE DEL HERO
+       ----------------------------------------------------- */
+
+    const heroPhone =
+      document.querySelector(".hero-phone");
+
 
     window.addEventListener(
-      'scroll',
-      function(){
+      "scroll",
+      () => {
 
-        if(!pTicking){
+        if (!heroPhone) return;
 
-          requestAnimationFrame(
-            updateParallax
-          );
+        const scroll =
+          window.scrollY;
 
-          pTicking = true;
+        if (scroll < window.innerHeight) {
+
+          heroPhone.style.transform =
+            `rotate(4deg) translateY(${scroll * .05}px)`;
 
         }
 
       },
-      {passive:true}
+      { passive: true }
     );
 
-  }
-
-})();
-
-</script>
+  </script>
 
 </body>
 </html>
-```
